@@ -8,7 +8,7 @@ services:
       - DJANGO_SETTINGS_MODULE=config.settings.prod
       - DJANGO_SECRET_KEY=yoloyolo123
       - DJANGO_DATABASE_URL=postgresql://chaospizza:chaospizza@db:5432/chaospizza
-      #- SENTRY_DSN=yolo
+      #- SENTRY_DSN=
     networks:
       - internal
       - traefik

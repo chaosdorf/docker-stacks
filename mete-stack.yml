@@ -26,7 +26,7 @@ services:
       - RAILS_ENV=production
       - SECRET_KEY_BASE=yoloyolo123
       - DATABASE_URL=postgresql://mete:mete@db:5432/mete?pool=5&timeout=5000
-      - SENTRY_DSN=
+      #- SENTRY_DSN=
     volumes:
       - app-staticfiles:/app/public
     networks:
