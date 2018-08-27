@@ -1,0 +1,80 @@
+version: '3'
+
+services:
+  app:
+    image: swarmpit/swarmpit:1.5
+    environment:
+      - SWARMPIT_DB=http://db:5984
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    networks:
+      - internal
+      - traefik
+    deploy:
+      mode: replicated
+      replicas: 1
+      placement:
+        constraints:
+          - node.role == manager
+      restart_policy:
+        condition: on-failure
+      resources:
+        limits:
+          cpus: '0.50'
+          memory: 1024M
+        reservations:
+          cpus: '0.25'
+          memory: 512M
+      labels:
+        - traefik.docker.network=traefik_net
+        - traefik.port=8080
+        - traefik.frontend.rule=Host:swarmpit.chaosdorf.space
+  agent:
+    image: swarmpit/agent:2.0
+    environment:
+      - DOCKER_API_VERSION=1.35
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    networks:
+      - internal
+    deploy:
+      mode: global
+      restart_policy:
+        condition: on-failure
+      resources:
+        limits:
+          cpus: '0.10'
+          memory: 64M
+        reservations:
+          cpus: '0.05'
+          memory: 32M
+  db:
+    image: klaemo/couchdb:2.0.0
+    volumes:
+      - db-data:/opt/couchdb/data
+    networks:
+      - internal
+    deploy:
+      mode: replicated
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+      resources:
+        limits:
+          cpus: '0.30'
+          memory: 512M
+        reservations:
+          cpus: '0.15'
+          memory: 256M
+
+volumes:
+  db-data:
+    driver: local
+
+networks:
+  internal:
+    driver: overlay
+  traefik:
+    driver: overlay
+    external: true
+    name: traefik_net

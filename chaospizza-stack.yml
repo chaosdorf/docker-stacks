@@ -1,0 +1,49 @@
+version: '3.7'
+
+services:
+  app:
+    image: chaosdorf/chaospizza:latest
+    environment:
+      - DJANGO_ALLOWED_HOSTS=pizza.chaosdorf.space
+      - DJANGO_SETTINGS_MODULE=config.settings.prod
+      - DJANGO_SECRET_KEY=yoloyolo123
+      - DJANGO_DATABASE_URL=postgresql://chaospizza:chaospizza@db:5432/chaospizza
+      #- SENTRY_DSN=yolo
+    networks:
+      - internal
+      - traefik
+    deploy:
+      mode: replicated
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+      labels:
+        - traefik.docker.network=traefik_net
+        - traefik.port=8000
+        - traefik.frontend.rule=Host:pizza.chaosdorf.space
+  db:
+    image: postgres:9.6
+    environment:
+      POSTGRES_USER: chaospizza
+      POSTGRES_PASSWORD: chaospizza
+      POSTGRES_DB: chaospizza
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    networks:
+      - internal
+    deploy:
+      mode: replicated
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+
+volumes:
+  db-data:
+
+networks:
+  internal:
+    driver: overlay
+  traefik:
+    driver: overlay
+    external: true
+    name: traefik_net

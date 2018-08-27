@@ -1,0 +1,32 @@
+version: '3.7'
+
+services:
+  proxy:
+    image: traefik:latest
+    command: "--docker --docker.swarmMode --docker.domain=chaosdorf.space --docker.watch --api --logLevel=DEBUG"
+    #configs:
+    #  - source: toml
+    #    target: /etc/traefik/traefik.toml
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      #- traefik-acme:/etc/traefik/acme
+    networks:
+      - net
+    ports:
+      - 80:80
+      - 8080:8080
+    deploy:
+      placement:
+        constraints:
+          - node.role == manager
+
+#volumes:
+#  acme:
+
+networks:
+  net:
+    driver: overlay
+
+#configs:
+#  toml:
+#    file: ./configs/traefik.toml
