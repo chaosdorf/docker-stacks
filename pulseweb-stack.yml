@@ -1,0 +1,25 @@
+version: '3.7'
+
+services:
+  app:
+    image: chaosdorf/pawebcontrol:latest
+    environment:
+      #- PULSE_SERVER=pulse.chaosdorf.space
+      - PULSE_SERVER=172.22.27.19
+    networks:
+      - traefik
+    deploy:
+      mode: replicated
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+      labels:
+        - traefik.docker.network=traefik_net
+        - traefik.port=8080
+        - traefik.frontend.rule=Host:pulseweb.chaosdorf.space
+
+networks:
+  traefik:
+    driver: overlay
+    external: true
+    name: traefik_net
