@@ -2,8 +2,8 @@
 
 [work in progress]
 
-Contains docker stacks intended to be run on our single-node docker swarm.
-Single-node docker swarm is similar to running docker engine on a single host but gives a bit more management capabilities like stacks, configs and secrets.
+Contains docker stacks intended to be deployed on our single-node docker swarm.
+Single-node docker swarm is similar to docker engine on a single host but gives a bit more management capabilities like stacks, configs and secrets.
 
 All applications are run in isolated networks not accessible from the outside world by default.
 Traefik is deployed to provide L7 HTTP/HTTPS access for all internal services when necessary.
