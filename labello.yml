@@ -1,0 +1,24 @@
+version: '3.7'
+
+services:
+  app:
+    image: chaosdorf/labello:latest
+    #environment:
+      #- SENTRY_DSN=
+    networks:
+      - traefik
+    deploy:
+      mode: replicated
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+      labels:
+        - traefik.docker.network=traefik_net
+        - traefik.port=8000
+        - traefik.frontend.rule=Host:labello.chaosdorf.space
+
+networks:
+  traefik:
+    driver: overlay
+    external: true
+    name: traefik_net
