@@ -16,9 +16,9 @@ Tested with docker 18.06.1-ce, build e68fc7a in swarm mode.
 To deploy services:
 
 ```bash
-$ docker stack deploy -c traefik-stack.yml traefik
-$ docker stack deploy -c chaospizza-stack.yml chaospizza
-$ docker stack deploy -c mete-stack.yml mete
+$ docker stack deploy -c traefik.yml traefik
+$ docker stack deploy -c chaospizza.yml chaospizza
+$ docker stack deploy -c mete.yml mete
 ```
 
 Traefik publishes port 80 for application access and 8080 for [admin access](http://127.0.0.1:8080/dashboard/).
@@ -30,8 +30,12 @@ Traefik does not manage DNS records and TLS certs yet. When running swarm on loc
 ```
 127.0.0.1 swarmpit.chaosdorf.space
 127.0.0.1 portainer.chaosdorf.space
-127.0.0.1 chaospizza.chaosdorf.space
+127.0.0.1 pizza.chaosdorf.space
+127.0.0.1 dashpi.chaosdorf.space
+127.0.0.1 labello.chaosdorf.space
 127.0.0.1 mete.chaosdorf.space
+127.0.0.1 pulseweb.chaosdorf.space
+127.0.0.1 ympd.chaosdorf.space
 ```
 
 The mete docker image is currently broken and wont initialize correctly.
