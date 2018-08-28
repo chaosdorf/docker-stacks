@@ -1,0 +1,45 @@
+version: '3.7'
+
+services:
+  app:
+    image: chaosdorf/dashpi:latest
+    environment:
+      - TRAFFIC_HOST=feedback.chaosdorf.space
+      - MOSQUITTO_HOST=mqttserver.chaosdorf.space
+      - PING_HOST=speedtest-2.unitymedia.de
+    secrets:
+      - DASHING_AUTH_TOKEN
+      - TWITTER_ACCESS_TOKEN
+      - TWITTER_ACCESS_TOKEN_SECRET
+      - TWITTER_CONSUMER_KEY
+      - TWITTER_CONSUMER_SECRET
+      - SENTRY_DSN
+    networks:
+      - traefik
+    deploy:
+      mode: replicated
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+      labels:
+        - traefik.docker.network=traefik_net
+        - traefik.port=3030
+        - traefik.frontend.rule=Host:dashpi.chaosdorf.space
+
+networks:
+  traefik:
+    driver: overlay
+    external: true
+    name: traefik_net
+
+secrets:
+  DASHING_AUTH_TOKEN:
+    external: true
+  TWITTER_ACCESS_TOKEN:
+    external: true
+  TWITTER_ACCESS_TOKEN_SECRET:
+    external: true
+  TWITTER_CONSUMER_KEY:
+    external: true
+  TWITTER_CONSUMER_SECRET:
+    external: true
