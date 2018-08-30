@@ -16,9 +16,12 @@ services:
       - 80:80
       - 8080:8080
     deploy:
+      mode: global
       placement:
         constraints:
           - node.role == manager
+      restart_policy:
+        condition: on-failure
 
 #volumes:
 #  acme:
