@@ -3,7 +3,7 @@ version: '3.7'
 services:
   proxy:
     image: traefik:latest
-    command: "--docker --docker.swarmMode --docker.domain=chaosdorf.space --docker.watch --api --logLevel=DEBUG"
+    command: "--docker --docker.swarmMode --docker.domain=chaosdorf.space --docker.watch --api"
     #configs:
     #  - source: toml
     #    target: /etc/traefik/traefik.toml
