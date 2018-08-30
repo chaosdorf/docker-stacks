@@ -13,9 +13,17 @@ services:
       mode: replicated
       replicas: 1
       placement:
-        constraints: [node.role == manager]
+        constraints:
+          - node.role == manager
       restart_policy:
         condition: on-failure
+      resources:
+        limits:
+          cpus: '0.50'
+          memory: 128M
+        reservations:
+          cpus: '0.25'
+          memory: 32M
       labels:
         - traefik.docker.network=traefik_net
         - traefik.port=9000
@@ -36,7 +44,15 @@ services:
     deploy:
       mode: global
       placement:
-        constraints: [node.platform.os == linux]
+        constraints:
+          - node.platform.os == linux
+      resources:
+        limits:
+          cpus: '0.50'
+          memory: 128M
+        reservations:
+          cpus: '0.25'
+          memory: 32M
 
 volumes:
   app-data:
