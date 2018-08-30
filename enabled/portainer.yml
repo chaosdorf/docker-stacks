@@ -38,7 +38,7 @@ services:
       # LOG_LEVEL: debug
     volumes:
       - /var/run/docker-userns.sock:/var/run/docker.sock
-      - /var/lib/docker/volumes:/var/lib/docker/volumes
+      - /var/lib/docker/165536.165536/volumes:/var/lib/docker/volumes
     networks:
       - internal
     deploy:
