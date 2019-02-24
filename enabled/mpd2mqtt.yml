@@ -1,0 +1,12 @@
+version: '3.7'
+
+services:
+  app:
+    image: chaosdorf/mpd-mqtt-gateway:latest
+    environment:
+      #- SENTRY_DSN=
+    deploy:
+      mode: replicated
+      replicas: 1
+      restart_policy:
+        condition: on-failure
