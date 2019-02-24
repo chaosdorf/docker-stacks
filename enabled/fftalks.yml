@@ -1,0 +1,38 @@
+version: '3.7'
+
+services:
+  app:
+    image: chaosdorf/freitagsfoo-web:latest
+    secrets:
+      - INFO_BEAMER_API_KEY
+      - FFTALKS_SENTRY_DSN
+    configs:
+      - source: freitagsfoo_web
+        target: /etc/freitagsfoo-web.cfg
+    networks:
+      - traefik
+    deploy:
+      mode: replicated
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+    labels:
+      - traefik.docker.network=traefik_net
+      - traefik.port=5000
+      - traefik.frontend.rule=Host:fftalks.chaosdorf.space
+
+networks:
+  traefik:
+    driver: overlay
+    external: true
+    name: traefik_net
+
+secrets:
+  INFO_BEAMER_API_KEY:
+    external: true
+  FFTALKS_SENTRY_DSN:
+    external: true
+
+configs:
+  freitagsfoo_web:
+    file: ../configs/fftalks.cfg
