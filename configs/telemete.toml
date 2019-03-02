@@ -1,0 +1,7 @@
+[mete_connection]
+base_url = "https://mete.chaosdorf.space/"
+
+[initial_admin]
+telegram_id = 64263572
+telegram_handle = "maride"
+mete_id = 207

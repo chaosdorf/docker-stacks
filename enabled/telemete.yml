@@ -1,0 +1,28 @@
+version: '3.7'
+
+services:
+  app:
+    image: ytvwld/telemete:latest
+    environment:
+      - CONFIG_FILE=/etc/telemete.toml
+    secrets:
+      - TELEMETE_API_KEY
+      - TELEMETE_SENTRY_DSN
+    configs:
+      - source: telemete-config
+        target: /etc/telemete.toml
+    deploy:
+      mode: replicated
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+
+secrets:
+  TELEMETE_API_KEY:
+    external: true
+  TELEMETE_SENTRY_DSN:
+    external: true
+
+configs:
+  telemete-config:
+    file: ../configs/telemete.toml
