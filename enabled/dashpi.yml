@@ -13,7 +13,8 @@ services:
       - TWITTER_ACCESS_TOKEN_SECRET
       - TWITTER_CONSUMER_KEY
       - TWITTER_CONSUMER_SECRET
-      - SENTRY_DSN
+      - source: DASHPI_SENTRY_DSN
+        target: SENTRY_DSN
     networks:
       - traefik
     deploy:
@@ -42,4 +43,6 @@ secrets:
   TWITTER_CONSUMER_KEY:
     external: true
   TWITTER_CONSUMER_SECRET:
+    external: true
+  DASHPI_SENTRY_DSN:
     external: true
