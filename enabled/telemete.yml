@@ -11,6 +11,8 @@ services:
     configs:
       - source: telemete-config
         target: /etc/telemete.toml
+    volumes:
+      - app-data:/usr/src/app/data
     deploy:
       mode: replicated
       replicas: 1
@@ -26,3 +28,6 @@ secrets:
 configs:
   telemete-config:
     file: ../configs/telemete.toml
+
+volumes:
+  app-data:
