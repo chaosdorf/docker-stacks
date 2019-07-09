@@ -7,7 +7,9 @@ services:
       - RAILS_ENV=production
       - SECRET_KEY_BASE=yoloyolo123
       - DATABASE_URL=postgresql://mete:mete@db:5432/mete?pool=5&timeout=5000
-      #- SENTRY_DSN=
+    secrets:
+      - source: METE_SENTRY_DSN
+        target: SENTRY_DSN
     volumes:
       - app-staticfiles:/app/public
     networks:
@@ -49,3 +51,7 @@ networks:
     driver: overlay
     external: true
     name: traefik_net
+
+secrets:
+  METE_SENTRY_DSN:
+    external: true
