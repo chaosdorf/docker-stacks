@@ -1,0 +1,46 @@
+version: '3.7'
+
+services:
+  app:
+    image: telegnom/labello:latest
+    environment:
+      - LAB_SERVER_PORT=8000
+      - LAB_SERVER_HOST=0.0.0.0
+      - LAB_LOGGING=30
+      - LAB_WEBSITE_HTML_TITLE=prittstift - more than labello
+      - LAB_WEBSITE_TITLE=prittstift
+      - LAB_WEBSITE_SLUG=labello++
+      - LAB_WEBSITE_BOOTSTRAP_LOCAL=True
+      - LAB_LABEL_MARGIN_TOP=24
+      - LAB_LABEL_MARGIN_BOTTOM=24
+      - LAB_LABEL_MARGIN_LEFT=24
+      - LAB_LABEL_MARGIN_RIGHT=24
+      - LAB_LABEL_FEED_MARGIN=16
+      - LAB_LABEL_FONT_SPACING=13
+      - LAB_PRINTER_DEVICE=tcp://172.22.26.67:9100
+      - LAB_PRINTER_MODEL=QL-720NW
+      - LAB_FONT_PATH=/opt/labello/fonts
+    networks:
+      - traefik
+    deploy:
+      mode: replicated
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+      resources:
+        limits:
+          cpus: '0.50'
+          memory: 128M
+        reservations:
+          cpus: '0.25'
+          memory: 32M
+      labels:
+        - traefik.docker.network=traefik_net
+        - traefik.port=8000
+        - traefik.frontend.rule=Host:prittstift.chaosdorf.space
+
+networks:
+  traefik:
+    driver: overlay
+    external: true
+    name: traefik_net
