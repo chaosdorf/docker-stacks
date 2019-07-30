@@ -8,7 +8,7 @@ services:
       - DJANGO_SETTINGS_MODULE=config.settings.prod
       - DJANGO_DATABASE_URL=postgresql://chaospizza:chaospizza@db:5432/chaospizza
     secrets:
-      - sourxe: CHAOSPIZZA_DJANGO_SECRET_KEY
+      - source: CHAOSPIZZA_DJANGO_SECRET_KEY
         target: DJANGO_SECRET_KEY
       - source: CHAOSPIZZA_SENTRY_DSN
         target: SENTRY_DSN
