@@ -11,7 +11,7 @@ services:
       - /var/run/docker-userns.sock:/var/run/docker.sock
       #- traefik-acme:/etc/traefik/acme
     networks:
-      - net
+      - traefik
     ports:
       - 80:80
       - 8080:8080
@@ -34,8 +34,10 @@ services:
 #  acme:
 
 networks:
-  net:
+  traefik:
     driver: overlay
+    external: true
+    name: traefik_net
 
 #configs:
 #  toml:
