@@ -29,7 +29,7 @@ services:
     environment:
       POSTGRES_USER: mete
       POSTGRES_PASSWORD: mete
-      POSTGRES_DB: mete
+      POSTGRES_DB: nonexistant # mete relies on the actual db not yet existing on first start
     volumes:
       - db-data:/var/lib/postgresql/data
     networks:
