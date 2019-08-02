@@ -8,7 +8,7 @@ services:
     #  - source: toml
     #    target: /etc/traefik/traefik.toml
     volumes:
-      - /var/run/docker-userns.sock:/var/run/docker.sock
+      - /var/run/docker.sock:/var/run/docker.sock
       #- traefik-acme:/etc/traefik/acme
     networks:
       - traefik
