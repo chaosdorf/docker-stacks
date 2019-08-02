@@ -25,7 +25,7 @@ services:
       labels:
         - traefik.docker.network=traefik_net
         - traefik.port=3030
-        - traefik.frontend.rule=Host:dashpi.chaosdorf.space
+        - traefik.frontend.rule=Host:dashboard.chaosdorf.space
 
 networks:
   traefik:
