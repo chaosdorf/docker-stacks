@@ -16,10 +16,10 @@ services:
       replicas: 1
       restart_policy:
         condition: on-failure
-    labels:
-      - traefik.docker.network=traefik_net
-      - traefik.port=5000
-      - traefik.frontend.rule=Host:fftalks.chaosdorf.space
+      labels:
+        - traefik.docker.network=traefik_net
+        - traefik.port=5000
+        - traefik.frontend.rule=Host:fftalks.chaosdorf.space
 
 networks:
   traefik:
