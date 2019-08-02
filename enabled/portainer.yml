@@ -27,7 +27,7 @@ services:
       labels:
         - traefik.docker.network=traefik_net
         - traefik.port=9000
-        - traefik.frontend.rule=Host:portainer.chaosdorf.space
+        - traefik.frontend.rule=Host:portainer.chaosdorf.space,portainer
   agent:
     image: portainer/agent:latest
     environment:

@@ -19,7 +19,7 @@ services:
       labels:
         - traefik.docker.network=traefik_net
         - traefik.port=5000
-        - traefik.frontend.rule=Host:fftalks.chaosdorf.space
+        - traefik.frontend.rule=Host:fftalks.chaosdorf.space,fftalks
 
 networks:
   traefik:

@@ -23,7 +23,7 @@ services:
       labels:
         - traefik.docker.network=traefik_net
         - traefik.port=8080
-        - traefik.frontend.rule=Host:pulseweb.chaosdorf.space
+        - traefik.frontend.rule=Host:pulseweb.chaosdorf.space,pulseweb
 
 networks:
   traefik:
