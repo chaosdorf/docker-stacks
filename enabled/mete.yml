@@ -11,7 +11,7 @@ services:
       - source: METE_SENTRY_DSN
         target: SENTRY_DSN
     volumes:
-      - app-staticfiles:/app/public
+      - system:/app/public/system
     networks:
       - internal
       - traefik
@@ -55,7 +55,7 @@ services:
         condition: on-failure
 
 volumes:
-  app-staticfiles:
+  system:
   db-data:
   backup:
 
