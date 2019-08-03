@@ -39,10 +39,25 @@ services:
       replicas: 1
       restart_policy:
         condition: on-failure
+  db-backup:
+    image: nomaster/postgres-backup
+    environment:
+      PGUSER: mete
+      PGPASSWORD: mete
+    volumes:
+      - backup:/backup
+    networks:
+      - internal
+    deploy:
+      mode: replicated
+      replicas: 1
+      restart_policy:
+        condition: on-failure
 
 volumes:
   app-staticfiles:
   db-data:
+  backup:
 
 networks:
   internal:

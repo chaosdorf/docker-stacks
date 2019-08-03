@@ -53,9 +53,24 @@ services:
         reservations:
           cpus: '0.25'
           memory: 32M
+  db-backup:
+    image: nomaster/postgres-backup
+    volumes:
+      - backup:/backup
+    networks:
+      - internal
+    environment:
+      PGUSER: chaospizza
+      PGPASSWORD: chaospizza
+    deploy:
+      mode: replicated
+      replicas: 1
+      restart_policy:
+        condition: on-failure
 
 volumes:
   db-data:
+  backup:
 
 networks:
   internal:
