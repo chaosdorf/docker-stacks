@@ -49,7 +49,7 @@ services:
           cpus: '0.05'
           memory: 32M
   db:
-    image: klaemo/couchdb:2.0.0
+    image: couchdb:2.3
     volumes:
       - db-data:/opt/couchdb/data
     networks:
