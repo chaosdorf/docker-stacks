@@ -14,11 +14,12 @@ services:
       - "--entrypoints=Name:https Address::443 TLS"
       - "--defaultEntryPoints=https,http"
       - "--acme"
+      # - "--acme.acmeLogging=true"
       - "--acme.storage=/etc/traefik/acme/acme.json"
       - "--acme.dnsChallenge.provider=cloudflare"
       - "--acme.entryPoint=https"
       - "--acme.email=account+letsencrypt@chaosdorf.de"
-      - "--acme.onHostRule=true"
+      - "--acme.domains=*.chaosdorf.space"
       # - "--acme.caServer=https://acme-staging-v02.api.letsencrypt.org/directory"
     environment:
       CF_API_EMAIL: account+cloudflare@chaosdorf.de
