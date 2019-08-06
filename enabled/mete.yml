@@ -6,7 +6,6 @@ services:
     environment:
       - RAILS_ENV=production
       - SECRET_KEY_BASE=yoloyolo123
-      - DATABASE_URL=postgresql://mete:mete@db:5432/mete?pool=5&timeout=5000
     secrets:
       - source: METE_SENTRY_DSN
         target: SENTRY_DSN
@@ -27,9 +26,7 @@ services:
   db:
     image: postgres:10-alpine
     environment:
-      POSTGRES_USER: mete
       POSTGRES_PASSWORD: mete
-      POSTGRES_DB: nonexistant # mete relies on the actual db not yet existing on first start
     volumes:
       - database:/var/lib/postgresql/data
     networks:
@@ -42,7 +39,6 @@ services:
   db-backup:
     image: nomaster/postgres-backup
     environment:
-      PGUSER: mete
       PGPASSWORD: mete
     volumes:
       - backup:/backup
