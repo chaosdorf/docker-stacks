@@ -51,7 +51,7 @@ services:
   db:
     image: couchdb:2.3
     volumes:
-      - db-data:/opt/couchdb/data
+      - database:/opt/couchdb/data
     networks:
       - internal
     deploy:
@@ -68,7 +68,7 @@ services:
           memory: 256M
 
 volumes:
-  db-data:
+  database:
     driver: local
 
 networks:

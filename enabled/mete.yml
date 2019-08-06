@@ -31,7 +31,7 @@ services:
       POSTGRES_PASSWORD: mete
       POSTGRES_DB: nonexistant # mete relies on the actual db not yet existing on first start
     volumes:
-      - db-data:/var/lib/postgresql/data
+      - database:/var/lib/postgresql/data
     networks:
       - internal
     deploy:
@@ -56,7 +56,7 @@ services:
 
 volumes:
   system:
-  db-data:
+  database:
   backup:
 
 networks:
