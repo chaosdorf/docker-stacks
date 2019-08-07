@@ -5,8 +5,7 @@ Vagrant.configure("2") do |config|
   end
 
   config.vm.network :forwarded_port, host: 8080, guest: 80
-  config.vm.network :forwarded_port, host: 8081, guest: 8080
-  config.vm.network :forwarded_port, host: 8082, guest: 443
+  config.vm.network :forwarded_port, host: 4443, guest: 443
   config.vm.provision :shell, inline: <<-SHELL
     apt-get update
     apt-get install -y docker.io

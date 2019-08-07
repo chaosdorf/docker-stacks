@@ -28,7 +28,8 @@ $ docker stack deploy -c enabled/chaospizza.yml chaospizza
 $ docker stack deploy -c enabled/mete.yml mete
 ```
 
-Traefik publishes port 80 for application access and 8080 for [admin access](http://127.0.0.1:8080/dashboard/).
+Traefik publishes port 80 for application access and 443 for HTTPS.
+The Vagrantfile remaps this to 8080 and 4443.
 
 ## Notes
 
@@ -47,6 +48,7 @@ When running swarm on localhost, make sure to add DNS records e.g. to `/etc/host
 127.0.0.1 fftalks.chaosdorf.space
 127.0.0.1 pulseweb.chaosdorf.space
 127.0.0.1 ympd.chaosdorf.space
+127.0.0.1 traefik.chaosdorf.space
 127.0.0.1 swarmpit
 127.0.0.1 portainer
 127.0.0.1 pizza
@@ -57,6 +59,7 @@ When running swarm on localhost, make sure to add DNS records e.g. to `/etc/host
 127.0.0.1 fftalks
 127.0.0.1 pulseweb
 127.0.0.1 ympd
+127.0.0.1 traefik
 ```
 
 Portainer and swarmpit are fancy management web UIs and can be deployed tor testing.

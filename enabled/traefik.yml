@@ -19,7 +19,6 @@ services:
       - traefik
     ports:
       - 80:80
-      - 8080:8080
       - 443:443
     deploy:
       mode: global
@@ -35,6 +34,10 @@ services:
         reservations:
           cpus: '0.25'
           memory: 32M
+      labels:
+        - traefik.docker.network=traefik_net
+        - traefik.port=8080
+        - traefik.frontend.rule=Host:traefik.chaosdorf.space,traefik
 
 volumes:
   acme:
