@@ -22,6 +22,9 @@ services:
         - traefik.port=5000
         - traefik.frontend.headers.STSSeconds=2592000
         - traefik.frontend.rule=Host:fftalks.chaosdorf.space,fftalks
+        - traefik.frontend.errors.network.backend=error-app
+        - traefik.frontend.errors.network.status=401,403,429,503
+        - traefik.frontend.errors.network.query=/{status}.html
 
 networks:
   traefik:

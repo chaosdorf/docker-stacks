@@ -25,6 +25,9 @@ services:
         - traefik.port=8000
         - traefik.frontend.headers.STSSeconds=2592000
         - traefik.frontend.rule=Host:pulseweb.chaosdorf.space,pulseweb
+        - traefik.frontend.errors.network.backend=error-app
+        - traefik.frontend.errors.network.status=401,403,404,429,500,503
+        - traefik.frontend.errors.network.query=/{status}.html
 
 networks:
   traefik:
