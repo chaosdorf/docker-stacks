@@ -2,7 +2,7 @@ version: '3.7'
 
 services:
   proxy:
-    image: traefik:latest
+    image: traefik:v1.7
     command:
       - "--docker"
       - "--docker.swarmMode"
