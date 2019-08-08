@@ -11,6 +11,7 @@ services:
         target: /etc/traefik/traefik.toml
     secrets:
       - CF_API_KEY
+      - TRAEFIK_DIGEST_AUTH
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - acme:/etc/traefik/acme
@@ -56,4 +57,6 @@ configs:
 
 secrets:
   CF_API_KEY:
+    external: true
+  TRAEFIK_DIGEST_AUTH:
     external: true

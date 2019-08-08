@@ -29,6 +29,7 @@ Vagrant.configure("2") do |config|
     echo "https://pass@example.net/6" | docker secret create CHAOSPIZZA_SENTRY_DSN -
     echo "foo" | docker secret create CHAOSPIZZA_DJANGO_SECRET_KEY -
     echo "foo" | docker secret create CF_API_KEY -
+    echo "admin:traefik:817374111f31cc282162486425ee5e9e" | docker secret create TRAEFIK_DIGEST_AUTH - # admin:admin
     cd /vagrant && ./deploy-stacks.sh
   SHELL
 end

@@ -7,6 +7,7 @@ domain = "chaosdorf.space"
 watch = true
 
 [api]
+entryPoint = "traefik"
 
 [entryPoints]
     [entryPoints.http]
@@ -15,6 +16,12 @@ watch = true
     [entryPoints.https]
         address = ":443"
         [entryPoints.https.tls]
+    
+    [entryPoints.traefik]
+        address = ":8080"
+        [entryPoints.traefik.auth]
+            [entryPoints.traefik.auth.digest]
+                usersFile = "/run/secrets/TRAEFIK_DIGEST_AUTH"
 
 [acme]
 # acmeLogging = true
