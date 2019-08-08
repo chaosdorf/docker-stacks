@@ -9,7 +9,7 @@ services:
       - "--docker.domain=chaosdorf.space"
       - "--docker.watch"
       - "--api"
-      # - "--logLevel=DEBUG"
+      - "--logLevel=INFO" # DEBUG
       - "--entrypoints=Name:http Address::80"
       - "--entrypoints=Name:https Address::443 TLS"
       - "--defaultEntryPoints=https,http"
