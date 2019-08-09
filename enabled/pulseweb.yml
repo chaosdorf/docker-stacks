@@ -4,8 +4,7 @@ services:
   app:
     image: chaosdorf/pawebcontrol:latest
     environment:
-      #- PULSE_SERVER=pulse.chaosdorf.space
-      - PULSE_SERVER=172.22.27.19
+      - PULSE_SERVER=pulse.chaosdorf.space
     networks:
       - traefik
     deploy:
