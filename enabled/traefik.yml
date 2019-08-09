@@ -3,30 +3,12 @@ version: '3.7'
 services:
   proxy:
     image: traefik:v1.7
-    command:
-      - "--docker"
-      - "--docker.swarmMode"
-      - "--docker.domain=chaosdorf.space"
-      - "--docker.watch"
-      - "--api"
-      - "--logLevel=INFO" # DEBUG
-      - "--entrypoints=Name:http Address::80"
-      - "--entrypoints=Name:https Address::443 TLS"
-      - "--defaultEntryPoints=https,http"
-      - "--acme"
-      # - "--acme.acmeLogging=true"
-      - "--acme.storage=/etc/traefik/acme/acme.json"
-      - "--acme.dnsChallenge.provider=cloudflare"
-      - "--acme.entryPoint=https"
-      - "--acme.email=account+letsencrypt@chaosdorf.de"
-      - "--acme.domains=*.chaosdorf.space"
-      # - "--acme.caServer=https://acme-staging-v02.api.letsencrypt.org/directory"
     environment:
       CF_API_EMAIL: account+cloudflare@chaosdorf.de
       CF_API_KEY_FILE: /run/secrets/CF_API_KEY
-    #configs:
-    #  - source: toml
-    #    target: /etc/traefik/traefik.toml
+    configs:
+      - source: toml
+        target: /etc/traefik/traefik.toml
     secrets:
       - CF_API_KEY
     volumes:
@@ -64,9 +46,9 @@ networks:
     external: true
     name: traefik_net
 
-#configs:
-#  toml:
-#    file: ./configs/traefik.toml
+configs:
+  toml:
+    file: ../configs/traefik.toml
 
 secrets:
   CF_API_KEY:

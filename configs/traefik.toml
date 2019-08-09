@@ -1,0 +1,28 @@
+logLevel = "INFO" # DEBUG
+defaultEntryPoints = ["https", "http"]
+
+[docker]
+swarmMode = true
+domain = "chaosdorf.space"
+watch = true
+
+[api]
+
+[entryPoints]
+    [entryPoints.http]
+        address = ":80"
+    
+    [entryPoints.https]
+        address = ":443"
+        [entryPoints.https.tls]
+
+[acme]
+# acmeLogging = true
+storage = "/etc/traefik/acme/acme.json"
+email = "account+letsencrypt@chaosdorf.de"
+entryPoint = "https"
+# caServer = "https://acme-staging-v02.api.letsencrypt.org/directory"
+    [[acme.domains]]
+        main = "*.chaosdorf.space"
+    [acme.dnsChallenge]
+        provider = "cloudflare"
