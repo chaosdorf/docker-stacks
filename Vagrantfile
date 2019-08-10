@@ -1,7 +1,7 @@
 Vagrant.configure("2") do |config|
   config.vm.box = "ubuntu/bionic64"
   config.vm.provider :virtualbox do |v|
-    v.memory = 1500
+    v.memory = 768
   end
 
   config.vm.network :forwarded_port, host: 8080, guest: 80
@@ -11,6 +11,7 @@ Vagrant.configure("2") do |config|
     apt-get install -y docker.io
     adduser vagrant docker
     systemctl enable docker.service
+    echo '{"userns-remap": "default"}' > /etc/docker/daemon.json
     docker swarm init
     docker network create --driver overlay traefik_net
     echo "foo" | docker secret create DASHING_AUTH_TOKEN -

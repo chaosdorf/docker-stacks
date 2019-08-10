@@ -6,7 +6,7 @@ services:
     environment:
       - SWARMPIT_DB=http://db:5984
     volumes:
-      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - /var/run/docker-userns.sock:/var/run/docker.sock:ro
     networks:
       - internal
       - traefik
@@ -34,7 +34,7 @@ services:
     environment:
       - DOCKER_API_VERSION=1.35
     volumes:
-      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - /var/run/docker-userns.sock:/var/run/docker.sock:ro
     networks:
       - internal
     deploy:
