@@ -11,8 +11,10 @@ Vagrant.configure("2") do |config|
     apt-get install -y docker.io
     adduser vagrant docker
     systemctl enable docker.service
+    docker network create --ipv6 --subnet 172.20.0.0/20 --gateway 172.20.0.1 --gateway fd00:3984:3989::1 --subnet fd00:3984:3989::/64 --opt com.docker.network.bridge.name=docker_gwbridge --opt com.docker.network.bridge.enable_icc=true --opt com.docker.network.bridge.enable_ip_forwarding=true --opt com.docker.network.bridge.enable_ip_masquerade=true docker_gwbridge
     docker swarm init
     docker network create --driver overlay traefik_net
+    docker run -d --restart=always -v /var/run/docker.sock:/var/run/docker.sock:ro --privileged --net=host robbertkl/ipv6nat
     echo "foo" | docker secret create DASHING_AUTH_TOKEN -
     echo "foo" | docker secret create TWITTER_ACCESS_TOKEN -
     echo "foo" | docker secret create TWITTER_ACCESS_TOKEN_SECRET -
