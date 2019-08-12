@@ -10,9 +10,12 @@ Vagrant.configure("2") do |config|
     apt-get update
     apt-get install -y docker.io
     adduser vagrant docker
+    echo '{"ipv6": true, "fixed-cidr-v6": "fe80::42:e0ff:fe36:174c/64"}' > /etc/docker/daemon.json
     systemctl enable docker.service
     docker swarm init
     docker network create --driver overlay traefik_net
+    docker network remove ingress
+    docker network create --driver overlay --ingress --ipv6 --subnet fe80::c000:0:0:0/66 ingress
     echo "foo" | docker secret create DASHING_AUTH_TOKEN -
     echo "foo" | docker secret create TWITTER_ACCESS_TOKEN -
     echo "foo" | docker secret create TWITTER_ACCESS_TOKEN_SECRET -
