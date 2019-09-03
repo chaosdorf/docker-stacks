@@ -21,7 +21,7 @@ services:
           memory: 8M
       labels:
         - traefik.docker.network=traefik_net
-        - traefik.port=8080
+        - traefik.port=8000
         - traefik.frontend.rule=Host:pulseweb.chaosdorf.space,pulseweb
 
 networks:
