@@ -1,0 +1,27 @@
+version: '3.7'
+services:
+  app:
+    image: marudor/dorfmap-websockets:latest
+    networks:
+      - traefik
+    deploy:
+      mode: replicated
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+      resources:
+        limits:
+          cpus: '0.50'
+          memory: 128M
+        reservations:
+          cpus: '0.25'
+          memory: 32M
+      labels:
+        - traefik.docker.network=traefik_net
+        - traefik.port=3001
+        - traefik.frontend.rule=Host:dorfmapserver.chaosdorf.space,dorfmapserver
+networks:
+  traefik:
+    driver: overlay
+    external: true
+    name: traefik_net
