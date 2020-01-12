@@ -1,0 +1,12 @@
+version: '3.7'
+
+services:
+  app:
+    image: chaosdorf/spacebell:latest
+    deploy:
+      mode: replicated
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+    environment:
+      PULSE_SERVER: pulse.chaosdorf.space
