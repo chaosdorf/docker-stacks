@@ -8,6 +8,12 @@ All applications are run in isolated networks not accessible from the outside wo
 Traefik is deployed to provide L7 HTTP/HTTPS access for all internal services when necessary.
 It also automatically configures LetsEncrypt TLS certificates for domains.
 
+## Add a new piece of software
+
+**tl;dr**: Open a pull request which adds a new file to `enabled/`.
+
+For more details please see the [wiki](https://wiki.chaosdorf.de/Software#HowTo).
+
 ## Test this on your own machine
 
 You can simply use the provided `Vagrantfile`:
