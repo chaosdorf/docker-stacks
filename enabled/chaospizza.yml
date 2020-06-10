@@ -19,7 +19,8 @@ services:
       mode: replicated
       replicas: 1
       restart_policy:
-        condition: on-failure
+        delay: 60s
+        max_attempts: 5
       resources:
         limits:
           cpus: '0.50'
@@ -46,7 +47,8 @@ services:
       mode: replicated
       replicas: 1
       restart_policy:
-        condition: on-failure
+        delay: 60s
+        max_attempts: 5
       resources:
         limits:
           cpus: '0.50'
@@ -67,7 +69,8 @@ services:
       mode: replicated
       replicas: 1
       restart_policy:
-        condition: on-failure
+        delay: 60s
+        max_attempts: 5
 
 volumes:
   database:

@@ -18,7 +18,8 @@ services:
       mode: replicated
       replicas: 1
       restart_policy:
-        condition: on-failure
+        delay: 60s
+        max_attempts: 5
       labels:
         - traefik.docker.network=traefik_net
         - traefik.port=80
@@ -35,7 +36,8 @@ services:
       mode: replicated
       replicas: 1
       restart_policy:
-        condition: on-failure
+        delay: 60s
+        max_attempts: 5
   db-backup:
     image: nomaster/postgres-backup
     environment:
@@ -48,7 +50,8 @@ services:
       mode: replicated
       replicas: 1
       restart_policy:
-        condition: on-failure
+        delay: 60s
+        max_attempts: 5
 
 volumes:
   system:

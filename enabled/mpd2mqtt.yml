@@ -10,7 +10,8 @@ services:
       mode: replicated
       replicas: 1
       restart_policy:
-        condition: on-failure
+        delay: 60s
+        max_attempts: 5
 
 secrets:
   MPD2MQTT_SENTRY_DSN:

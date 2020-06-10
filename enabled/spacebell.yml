@@ -7,6 +7,7 @@ services:
       mode: replicated
       replicas: 1
       restart_policy:
-        condition: on-failure
+        delay: 60s
+        max_attempts: 5
     environment:
       PULSE_SERVER: pulse.chaosdorf.space
