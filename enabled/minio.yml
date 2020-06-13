@@ -1,0 +1,24 @@
+version: '3.7'
+
+volumes:
+  data:
+
+networks:
+  default:
+    name: traefik_net
+    external: true
+
+services:
+  minio:
+    image: minio/minio:latest
+    volumes:
+      - data:/data
+    environment:
+      # MINIO_ACCESS_KEY: foo
+      # MINIO_SECRET_KEY: bar
+    deploy:
+      labels:
+        - traefik.docker.network=traefik_net
+        - traefik.port=9000
+        - traefik.frontend.rule=Host:minio.chaosdorf.space
+    command: server /data
