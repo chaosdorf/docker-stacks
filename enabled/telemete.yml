@@ -2,7 +2,7 @@ version: '3.7'
 
 services:
   app:
-    image: ytvwld/telemete:latest
+    image: chaosdorf/telemete:latest
     environment:
       - CONFIG_FILE=/etc/telemete.toml
     secrets:
