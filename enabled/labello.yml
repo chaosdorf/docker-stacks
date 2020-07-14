@@ -24,6 +24,7 @@ services:
       labels:
         - traefik.docker.network=traefik_net
         - traefik.port=8000
+        - traefik.frontend.headers.STSSeconds=2592000
         - traefik.frontend.rule=Host:labello.chaosdorf.space,labello
 
 networks:

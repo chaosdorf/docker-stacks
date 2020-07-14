@@ -29,6 +29,7 @@ services:
       labels:
         - traefik.docker.network=traefik_net
         - traefik.port=8080
+        - traefik.frontend.headers.STSSeconds=2592000
         - traefik.frontend.rule=Host:swarmpit.chaosdorf.space,swarmpit
   agent:
     image: swarmpit/agent:2.0

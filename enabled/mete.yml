@@ -23,6 +23,7 @@ services:
       labels:
         - traefik.docker.network=traefik_net
         - traefik.port=80
+        - traefik.frontend.headers.STSSeconds=2592000
         - traefik.frontend.rule=Host:mete.chaosdorf.space,mete
   db:
     image: postgres:10-alpine
