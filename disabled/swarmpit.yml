@@ -28,9 +28,16 @@ services:
           memory: 512M
       labels:
         - traefik.docker.network=traefik_net
-        - traefik.port=8080
-        - traefik.frontend.headers.STSSeconds=2592000
-        - traefik.frontend.rule=Host:swarmpit.chaosdorf.space,swarmpit
+        - traefik.http.services.swarmpit.loadbalancer.server.port=8080
+        - "traefik.http.routers.swarmpit-http.rule=Host(`swarmpit.chaosdorf.space`) || Host(`swarmpit`)"
+        - traefik.http.routers.swarmpit-http.middlewares=global-headers@file
+        - traefik.http.routers.swarmpit-http.service=swarmpit@docker
+        - "traefik.http.routers.swarmpit-https.rule=Host(`swarmpit.chaosdorf.space`) || Host(`swarmpit`)"
+        - traefik.http.routers.swarmpit-https.middlewares=global-headers@file
+        - traefik.http.routers.swarmpit-https.service=swarmpit@docker
+        - traefik.http.routers.swarmpit-https.tls=true
+        - traefik.http.routers.swarmpit-https.tls.certresolver=default
+        - traefik.http.routers.swarmpit-https.tls.domains[0].main=*.chaosdorf.space
   agent:
     image: swarmpit/agent:2.0
     environment:

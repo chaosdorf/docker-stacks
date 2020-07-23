@@ -19,9 +19,9 @@ services:
           memory: 5M
       labels:
         - traefik.docker.network=traefik_net
-        - traefik.port=80
-        - traefik.frontend.rule=HostRegexp:{catchall:.*}
-        - traefik.frontend.priority=9 # low priority as fallback
+        - traefik.http.services.error.loadbalancer.server.port=80
+        - "traefik.http.routers.error.rule=HostRegexp(`{host:.+}`)"
+        - traefik.http.routers.error.priority=1 # low priority as fallback
 
 networks:
   traefik:

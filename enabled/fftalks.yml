@@ -19,12 +19,19 @@ services:
         max_attempts: 5
       labels:
         - traefik.docker.network=traefik_net
-        - traefik.port=5000
-        - traefik.frontend.headers.STSSeconds=2592000
-        - traefik.frontend.rule=Host:fftalks.chaosdorf.space,fftalks
-        - traefik.frontend.errors.network.backend=error-app
-        - traefik.frontend.errors.network.status=401,403,429,503
-        - traefik.frontend.errors.network.query=/{status}.html
+        - traefik.http.services.fftalks.loadbalancer.server.port=5000
+        - "traefik.http.routers.fftalks-http.rule=Host(`fftalks.chaosdorf.space`) || Host(`fftalks`)"
+        - traefik.http.routers.fftalks-http.middlewares=global-headers@file,fftalks-error@docker
+        - traefik.http.routers.fftalks-http.service=fftalks@docker
+        - "traefik.http.routers.fftalks-https.rule=Host(`fftalks.chaosdorf.space`) || Host(`fftalks`)"
+        - traefik.http.routers.fftalks-https.middlewares=global-headers@file,fftalks-error@docker
+        - traefik.http.routers.fftalks-https.service=fftalks@docker
+        - traefik.http.routers.fftalks-https.tls=true
+        - traefik.http.routers.fftalks-https.tls.certresolver=default
+        - traefik.http.routers.fftalks-https.tls.domains[0].main=*.chaosdorf.space
+        - traefik.http.middlewares.fftalks-error.errors.service=error@docker
+        - traefik.http.middlewares.fftalks-error.errors.status=401,403,429,503
+        - traefik.http.middlewares.fftalks-error.errors.query=/{status}.html
 
 networks:
   traefik:

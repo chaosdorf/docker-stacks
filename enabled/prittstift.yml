@@ -39,12 +39,19 @@ services:
           memory: 32M
       labels:
         - traefik.docker.network=traefik_net
-        - traefik.port=8000
-        - traefik.frontend.headers.STSSeconds=2592000
-        - traefik.frontend.rule=Host:prittstift.chaosdorf.space,prittstift
-        - traefik.frontend.errors.network.backend=error-app
-        - traefik.frontend.errors.network.status=401,403,404,429,500,503
-        - traefik.frontend.errors.network.query=/{status}.html
+        - traefik.http.services.prittstift.loadbalancer.server.port=8000
+        - "traefik.http.routers.prittstift-http.rule=Host(`prittstift.chaosdorf.space`) || Host(`prittstift`)"
+        - traefik.http.routers.prittstift-http.middlewares=global-headers@file,prittstift-error@docker
+        - traefik.http.routers.prittstift-http.service=prittstift@docker
+        - "traefik.http.routers.prittstift-https.rule=Host(`prittstift.chaosdorf.space`) || Host(`prittstift`)"
+        - traefik.http.routers.prittstift-https.middlewares=global-headers@file,prittstift-error@docker
+        - traefik.http.routers.prittstift-https.service=prittstift@docker
+        - traefik.http.routers.prittstift-https.tls=true
+        - traefik.http.routers.prittstift-https.tls.certresolver=default
+        - traefik.http.routers.prittstift-https.tls.domains[0].main=*.chaosdorf.space
+        - traefik.http.middlewares.prittstift-error.errors.service=error@docker
+        - traefik.http.middlewares.prittstift-error.errors.status=401,403,404,429,500,503
+        - traefik.http.middlewares.prittstift-error.errors.query=/{status}.html
 
 networks:
   traefik:
