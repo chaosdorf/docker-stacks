@@ -1,0 +1,22 @@
+[providers]
+  [providers.file]
+    filename = "/etc/traefik/dynamic.toml"
+  [providers.docker]
+    watch = true
+    swarmMode = true
+    # only detect services that have something configured
+    constraints = "Label(`traefik.docker.network`, `traefik_net`)"
+
+[api]
+
+[log]
+  level = "INFO" # DEBUG
+
+[certificatesResolvers]
+  [certificatesResolvers.default]
+    [certificatesResolvers.default.acme]
+      email = "account+letsencrypt@chaosdorf.de"
+      # caServer = "https://acme-staging-v02.api.letsencrypt.org/directory"
+      storage = "/etc/traefik/acme/acme.json"
+      [certificatesResolvers.default.acme.dnsChallenge]
+        provider = "cloudflare"

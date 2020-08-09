@@ -30,13 +30,16 @@ services:
           memory: 128M
       labels:
         - traefik.docker.network=traefik_net
-        - traefik.port=8000
-        - traefik.frontend.headers.STSSeconds=2592000
-        - traefik.frontend.rule=Host:pizza.chaosdorf.space
-        - traefik.frontend.entryPoints=https
-        - traefik.frontend.errors.network.backend=error-app
-        - traefik.frontend.errors.network.status=401,403,404,429,500,503
-        - traefik.frontend.errors.network.query=/{status}.html
+        - traefik.http.services.chaospizza.loadbalancer.server.port=8000
+        - "traefik.http.routers.chaospizza.rule=Host(`pizza.chaosdorf.space`)"
+        - traefik.http.routers.chaospizza.middlewares=global-headers@file,chaospizza-error@docker
+        - traefik.http.routers.chaospizza.service=chaospizza@docker
+        - traefik.http.routers.chaospizza.tls=true
+        - traefik.http.routers.chaospizza.tls.certresolver=default
+        - traefik.http.routers.chaospizza.tls.domains[0].main=*.chaosdorf.space
+        - traefik.http.middlewares.chaospizza-error.errors.service=error@docker
+        - traefik.http.middlewares.chaospizza-error.errors.status=401,403,404,429,500,503
+        - traefik.http.middlewares.chaospizza-error.errors.query=/{status}.html
   db:
     image: postgres:9.6
     environment:

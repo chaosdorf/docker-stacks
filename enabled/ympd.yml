@@ -22,12 +22,19 @@ services:
           memory: 8M
       labels:
         - traefik.docker.network=traefik_net
-        - traefik.port=8080
-        - traefik.frontend.headers.STSSeconds=2592000
-        - traefik.frontend.rule=Host:ympd.chaosdorf.space,ympd
-        - traefik.frontend.errors.network.backend=error-app
-        - traefik.frontend.errors.network.status=401,403,404,429,500,503
-        - traefik.frontend.errors.network.query=/{status}.html
+        - traefik.http.services.ympd.loadbalancer.server.port=8080
+        - "traefik.http.routers.ympd-http.rule=Host(`ympd.chaosdorf.space`) || Host(`ympd`)"
+        - traefik.http.routers.ympd-http.middlewares=global-headers@file,ympd-error@docker
+        - traefik.http.routers.ympd-http.service=ympd@docker
+        - "traefik.http.routers.ympd-https.rule=Host(`ympd.chaosdorf.space`) || Host(`ympd`)"
+        - traefik.http.routers.ympd-https.middlewares=global-headers@file,ympd-error@docker
+        - traefik.http.routers.ympd-https.service=ympd@docker
+        - traefik.http.routers.ympd-https.tls=true
+        - traefik.http.routers.ympd-https.tls.certresolver=default
+        - traefik.http.routers.ympd-https.tls.domains[0].main=*.chaosdorf.space
+        - traefik.http.middlewares.ympd-error.errors.service=error@docker
+        - traefik.http.middlewares.ympd-error.errors.status=401,403,404,429,500,503
+        - traefik.http.middlewares.ympd-error.errors.query=/{status}.html
 
 networks:
   traefik:

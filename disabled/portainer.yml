@@ -27,12 +27,19 @@ services:
           memory: 32M
       labels:
         - traefik.docker.network=traefik_net
-        - traefik.port=9000
-        - traefik.frontend.headers.STSSeconds=2592000
-        - traefik.frontend.rule=Host:portainer.chaosdorf.space,portainer
-        - traefik.frontend.errors.network.backend=error-app
-        - traefik.frontend.errors.network.status=401,403,404,429,500,503
-        - traefik.frontend.errors.network.query=/{status}.html
+        - traefik.http.services.portainer.loadbalancer.server.port=9000
+        - "traefik.http.routers.portainer-http.rule=Host(`portainer.chaosdorf.space`) || Host(`portainer`)"
+        - traefik.http.routers.portainer-http.middlewares=global-headers@file,portainer-error@docker
+        - traefik.http.routers.portainer-http.service=portainer@docker
+        - "traefik.http.routers.portainer-https.rule=Host(`portainer.chaosdorf.space`) || Host(`portainer`)"
+        - traefik.http.routers.portainer-https.middlewares=global-headers@file,portainer-error@docker
+        - traefik.http.routers.portainer-https.service=portainer@docker
+        - traefik.http.routers.portainer-https.tls=true
+        - traefik.http.routers.portainer-https.tls.certresolver=default
+        - traefik.http.routers.portainer-https.tls.domains[0].main=*.chaosdorf.space
+        - traefik.http.middlewares.portainer-error.errors.service=error@docker
+        - traefik.http.middlewares.portainer-error.errors.status=401,403,404,429,500,503
+        - traefik.http.middlewares.portainer-error.errors.query=/{status}.html
   agent:
     image: portainer/agent:latest
     environment:

@@ -19,8 +19,16 @@ services:
           memory: 32M
       labels:
         - traefik.docker.network=traefik_net
-        - traefik.port=3001
-        - traefik.frontend.rule=Host:dorfmapserver.chaosdorf.space,dorfmapserver
+        - traefik.http.services.dorfmapserver.loadbalancer.server.port=3001
+        - "traefik.http.routers.dorfmapserver-http.rule=Host(`dorfmapserver.chaosdorf.space`) || Host(`dorfmapserver`)"
+        - traefik.http.routers.dorfmapserver-http.middlewares=global-headers@file
+        - traefik.http.routers.dorfmapserver-http.service=dorfmapserver@docker
+        - "traefik.http.routers.dorfmapserver-https.rule=Host(`dorfmapserver.chaosdorf.space`) || Host(`dorfmapserver`)"
+        - traefik.http.routers.dorfmapserver-https.middlewares=global-headers@file
+        - traefik.http.routers.dorfmapserver-https.service=dorfmapserver@docker
+        - traefik.http.routers.dorfmapserver-https.tls=true
+        - traefik.http.routers.dorfmapserver-https.tls.certresolver=default
+        - traefik.http.routers.dorfmapserver-https.tls.domains[0].main=*.chaosdorf.space
 networks:
   traefik:
     driver: overlay

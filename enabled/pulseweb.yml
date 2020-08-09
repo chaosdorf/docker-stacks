@@ -22,12 +22,19 @@ services:
           memory: 8M
       labels:
         - traefik.docker.network=traefik_net
-        - traefik.port=8000
-        - traefik.frontend.headers.STSSeconds=2592000
-        - traefik.frontend.rule=Host:pulseweb.chaosdorf.space,pulseweb
-        - traefik.frontend.errors.network.backend=error-app
-        - traefik.frontend.errors.network.status=401,403,404,429,500,503
-        - traefik.frontend.errors.network.query=/{status}.html
+        - traefik.http.services.pulseweb.loadbalancer.server.port=8000
+        - "traefik.http.routers.pulseweb-http.rule=Host(`pulseweb.chaosdorf.space`) || Host(`pulseweb`)"
+        - traefik.http.routers.pulseweb-http.middlewares=global-headers@file,pulseweb-error@docker
+        - traefik.http.routers.pulseweb-http.service=pulseweb@docker
+        - "traefik.http.routers.pulseweb-https.rule=Host(`pulseweb.chaosdorf.space`) || Host(`pulseweb`)"
+        - traefik.http.routers.pulseweb-https.middlewares=global-headers@file,pulseweb-error@docker
+        - traefik.http.routers.pulseweb-https.service=pulseweb@docker
+        - traefik.http.routers.pulseweb-https.tls=true
+        - traefik.http.routers.pulseweb-https.tls.certresolver=default
+        - traefik.http.routers.pulseweb-https.tls.domains[0].main=*.chaosdorf.space
+        - traefik.http.middlewares.pulseweb-error.errors.service=error@docker
+        - traefik.http.middlewares.pulseweb-error.errors.status=401,403,404,429,500,503
+        - traefik.http.middlewares.pulseweb-error.errors.query=/{status}.html
 
 networks:
   traefik:

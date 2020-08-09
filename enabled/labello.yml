@@ -23,12 +23,19 @@ services:
           memory: 32M
       labels:
         - traefik.docker.network=traefik_net
-        - traefik.port=8000
-        - traefik.frontend.headers.STSSeconds=2592000
-        - traefik.frontend.rule=Host:labello.chaosdorf.space,labello
-        - traefik.frontend.errors.network.backend=error-app
-        - traefik.frontend.errors.network.status=401,403,404,429,503
-        - traefik.frontend.errors.network.query=/{status}.html
+        - traefik.http.services.labello.loadbalancer.server.port=8000
+        - "traefik.http.routers.labello-http.rule=Host(`labello.chaosdorf.space`) || Host(`labello`)"
+        - traefik.http.routers.labello-http.middlewares=global-headers@file,labello-error@docker
+        - traefik.http.routers.labello-http.service=labello@docker
+        - "traefik.http.routers.labello-https.rule=Host(`labello.chaosdorf.space`) || Host(`labello`)"
+        - traefik.http.routers.labello-https.middlewares=global-headers@file,labello-error@docker
+        - traefik.http.routers.labello-https.service=labello@docker
+        - traefik.http.routers.labello-https.tls=true
+        - traefik.http.routers.labello-https.tls.certresolver=default
+        - traefik.http.routers.labello-https.tls.domains[0].main=*.chaosdorf.space
+        - traefik.http.middlewares.labello-error.errors.service=error@docker
+        - traefik.http.middlewares.labello-error.errors.status=401,403,404,429,503
+        - traefik.http.middlewares.labello-error.errors.query=/{status}.html
 
 networks:
   traefik:
