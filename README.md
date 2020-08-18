@@ -24,7 +24,7 @@ vagrant up
 
 If you want to set up the system yourself:
 
-It is tested with docker 18.09.7 in swarm mode.
+It is tested with docker 18.09 and 19.03 in swarm mode.
 
 To deploy services:
 
