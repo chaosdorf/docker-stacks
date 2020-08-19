@@ -17,7 +17,7 @@ services:
       - LAB_LABEL_MARGIN_RIGHT=24
       - LAB_LABEL_FEED_MARGIN=16
       - LAB_LABEL_FONT_SPACING=13
-      - LAB_PRINTER_DEVICE=tcp://172.22.26.67:9100
+      - LAB_PRINTER_DEVICE=tcp://10.1.255.228:9100
       - LAB_PRINTER_MODEL=QL-720NW
       - LAB_FONT_PATH=/opt/labello/fonts
     networks:
