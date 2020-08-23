@@ -35,5 +35,7 @@ Vagrant.configure("2") do |config|
     echo "foo" | docker secret create CF_API_KEY -
     echo "admin:traefik:817374111f31cc282162486425ee5e9e" | docker secret create TRAEFIK_DIGEST_AUTH - # admin:admin
     cd /vagrant && ./deploy-stacks.sh
+    docker exec $(docker ps -q -f name=sentry_snuba-api) ./docker_entrypoint.sh bootstrap --force
+    docker exec $(docker ps -q -f name=sentry_web) ./docker-entrypoint.sh upgrade --noinput
   SHELL
 end
