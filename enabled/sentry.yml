@@ -63,6 +63,19 @@ services:
       POSTGRES_HOST_AUTH_METHOD: 'trust'
     volumes:
       - 'sentry-postgres:/var/lib/postgresql/data'
+  postgres-backup:
+    << : *defaults
+    image: nomaster/postgres-backup
+    volumes:
+      - sentry-postgres-backup:/backup
+    environment:
+      PGHOST: postgres
+    deploy:
+      mode: replicated
+      replicas: 1
+      restart_policy:
+        delay: 60s
+        max_attempts: 5
   zookeeper:
     << : *defaults
     image: 'confluentinc/cp-zookeeper:5.5.0'
@@ -104,6 +117,19 @@ services:
     volumes:
       - 'sentry-clickhouse:/var/lib/clickhouse'
       - 'sentry-clickhouse-log:/var/log/clickhouse-server'
+  clickhouse-backup:
+    << : *defaults
+    image: ytvwld/clickhouse-backup
+    environment:
+        TABLE: sentry_local
+    volumes:
+      - sentry-clickhouse-backup:/backup
+    deploy:
+      mode: replicated
+      replicas: 1
+      restart_policy:
+        delay: 60s
+        max_attempts: 5
   snuba-api:
     << : *snuba_defaults
   # Kafka consumer responsible for feeding events into Clickhouse
@@ -227,6 +253,8 @@ volumes:
   sentry-zookeeper-log:
   sentry-kafka-log:
   sentry-clickhouse-log:
+  sentry-postgres-backup:
+  sentry-clickhouse-backup:
 configs:
   yaml:
     file: ../configs/sentry-config.yml
