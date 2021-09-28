@@ -1,0 +1,131 @@
+version: "3.7"
+# based on https://glitchtip.com/assets/docker-compose.sample.yml
+x-environment: &default-environment
+  SECRET_KEY: nope
+  PORT: 8000
+  GLITCHTIP_DOMAIN: https://glitchtip.chaosdorf.space
+  DEFAULT_FROM_EMAIL: raumrelay@chaosdorf.de
+  EMAIL_URL: smtps://raumrelay:nope@intern.chaosdorf.de:587
+  SENTRY_DSN: nope
+  # TODO: file a PR with GlitchTip for https://django-environ.readthedocs.io/en/latest/tips.html#docker-style-file-based-variables
+x-depends_on: &default-depends_on
+  - postgres
+  - redis
+x-deploy: &default-deploy
+  mode: replicated
+  replicas: 1
+  restart_policy:
+    delay: 60s
+    max_attempts: 5
+  resources:
+    limits:
+      cpus: '0.50'
+      memory: 256M
+    reservations:
+      cpus: '0.25'
+      memory: 32M
+
+services:
+  postgres:
+    image: postgres:13-alpine
+    environment:
+      POSTGRES_HOST_AUTH_METHOD: "trust"
+    volumes:
+      - database:/var/lib/postgresql/data
+    networks:
+      - internal
+    deploy: *default-deploy
+  postgres-backup:
+    image: nomaster/postgres-backup
+    volumes:
+      - backup:/backup
+    networks:
+      - internal
+    environment:
+      PGHOST: postgres
+      PGUSER: postgres
+      PGPASSWORD: postgres
+    deploy:
+      mode: replicated
+      replicas: 1
+      restart_policy:
+        delay: 60s
+        max_attempts: 5
+    depends_on:
+      - postgres
+  redis:
+    image: redis:6-alpine
+    networks:
+      - internal
+    volumes:
+      - redis:/data
+    deploy: *default-deploy
+  web:
+    image: glitchtip/glitchtip:v1.8.0
+    depends_on: *default-depends_on
+    environment: *default-environment
+    networks:
+      - internal
+      - traefik
+    deploy:
+      mode: replicated
+      replicas: 1
+      restart_policy:
+        delay: 60s
+        max_attempts: 5
+      resources:
+        limits:
+          cpus: '0.50'
+          memory: 256M
+        reservations:
+          cpus: '0.25'
+          memory: 128M
+      labels:
+        - traefik.docker.network=traefik_net
+        - traefik.http.services.glitchtip.loadbalancer.server.port=8000
+        - "traefik.http.routers.glitchtip.rule=Host(`glitchtip.chaosdorf.space`)"
+        - traefik.http.routers.glitchtip.middlewares=global-headers@file
+        - traefik.http.routers.glitchtip.service=glitchtip@docker
+        - traefik.http.routers.glitchtip.tls=true
+        - traefik.http.routers.glitchtip.tls.certresolver=default
+        - traefik.http.routers.glitchtip.tls.domains[0].main=*.chaosdorf.space
+  worker:
+    image: glitchtip/glitchtip:v1.8.0
+    command: celery -A glitchtip worker -B -l INFO
+    depends_on: *default-depends_on
+    environment: *default-environment
+    networks:
+      - internal
+    deploy: *default-deploy
+  migrate:
+    image: glitchtip/glitchtip:v1.8.0
+    depends_on: *default-depends_on
+    command: "./manage.py migrate"
+    networks:
+      - internal
+    environment: *default-environment
+    deploy:
+      mode: replicated
+      replicas: 1
+      restart_policy:
+        condition: none
+      resources:
+        limits:
+          cpus: '0.50'
+          memory: 256M
+        reservations:
+          cpus: '0.25'
+          memory: 32M
+
+volumes:
+  database:
+  backup:
+  redis:
+
+networks:
+  internal:
+    driver: overlay
+  traefik:
+    driver: overlay
+    external: true
+    name: traefik_net
