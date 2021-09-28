@@ -22,8 +22,8 @@ x-deploy: &default-deploy
       cpus: '0.50'
       memory: 256M
     reservations:
-      cpus: '0.25'
-      memory: 32M
+      cpus: '0.125'
+      memory: 16M
 
 services:
   postgres:
@@ -78,8 +78,8 @@ services:
           cpus: '0.50'
           memory: 256M
         reservations:
-          cpus: '0.25'
-          memory: 128M
+          cpus: '0.125'
+          memory: 64M
       labels:
         - traefik.docker.network=traefik_net
         - traefik.http.services.glitchtip.loadbalancer.server.port=8000
@@ -114,8 +114,8 @@ services:
           cpus: '0.50'
           memory: 256M
         reservations:
-          cpus: '0.25'
-          memory: 32M
+          cpus: '0.125'
+          memory: 16M
 
 volumes:
   database:

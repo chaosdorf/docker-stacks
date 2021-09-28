@@ -15,8 +15,8 @@ services:
           cpus: '0.50'
           memory: 128M
         reservations:
-          cpus: '0.25'
-          memory: 32M
+          cpus: '0.125'
+          memory: 16M
       labels:
         - traefik.docker.network=traefik_net
         - traefik.http.services.dorfmapserver.loadbalancer.server.port=3001

@@ -18,8 +18,8 @@ services:
           cpus: '0.50'
           memory: 256M
         reservations:
-          cpus: '0.25'
-          memory: 8M
+          cpus: '0.125'
+          memory: 4M
       labels:
         - traefik.docker.network=traefik_net
         - traefik.http.services.pulseweb.loadbalancer.server.port=8000
