@@ -1,19 +1,85 @@
 version: '3.7'
 
 services:
-  db:
-    image: busybox:1.34
-    command: ["sh", "-c", "echo 'host all all all md5' >> /database/pg_hba.conf"]
-    volumes:
-      - database2:/database
+  app:
+    image: chaosdorf/chaospizza:latest
+    environment:
+      - DJANGO_ALLOWED_HOSTS=pizza.chaosdorf.space
+      - DJANGO_SETTINGS_MODULE=config.settings.prod
+      - DJANGO_DATABASE_URL=postgresql://chaospizza:chaospizza@db:5432/chaospizza
+    secrets:
+      - source: CHAOSPIZZA_DJANGO_SECRET_KEY
+        target: DJANGO_SECRET_KEY
+      - source: CHAOSPIZZA_SENTRY_DSN
+        target: SENTRY_DSN
+    networks:
+      - internal
+      - traefik
     deploy:
       mode: replicated
       replicas: 1
       restart_policy:
-        condition: none
+        delay: 60s
+        max_attempts: 5
+      resources:
+        limits:
+          cpus: '0.50'
+          memory: 256M
+        reservations:
+          cpus: '0.125'
+          memory: 64M
+      labels:
+        - traefik.docker.network=traefik_net
+        - traefik.http.services.chaospizza.loadbalancer.server.port=8000
+        - "traefik.http.routers.chaospizza.rule=Host(`pizza.chaosdorf.space`)"
+        - traefik.http.routers.chaospizza.middlewares=global-headers@file,chaospizza-error@docker
+        - traefik.http.routers.chaospizza.service=chaospizza@docker
+        - traefik.http.routers.chaospizza.tls=true
+        - traefik.http.routers.chaospizza.tls.certresolver=default
+        - traefik.http.routers.chaospizza.tls.domains[0].main=*.chaosdorf.space
+        - traefik.http.middlewares.chaospizza-error.errors.service=error@docker
+        - traefik.http.middlewares.chaospizza-error.errors.status=401,403,404,429,500,503
+        - traefik.http.middlewares.chaospizza-error.errors.query=/{status}.html
+  db:
+    image: postgres:13-alpine
+    environment:
+      POSTGRES_USER: chaospizza
+      POSTGRES_PASSWORD: chaospizza
+      POSTGRES_DB: chaospizza
+    volumes:
+      - database2:/var/lib/postgresql/data
+    networks:
+      - internal
+    deploy:
+      mode: replicated
+      replicas: 1
+      restart_policy:
+        delay: 60s
+        max_attempts: 5
+      resources:
+        limits:
+          cpus: '0.50'
+          memory: 256M
+        reservations:
+          cpus: '0.125'
+          memory: 16M
+  db-backup:
+    image: nomaster/postgres-backup
+    volumes:
+      - backup:/backup
+    networks:
+      - internal
+    environment:
+      PGUSER: chaospizza
+      PGPASSWORD: chaospizza
+    deploy:
+      mode: replicated
+      replicas: 1
+      restart_policy:
+        delay: 60s
+        max_attempts: 5
 
 volumes:
-  database:
   database2:
   backup:
 
