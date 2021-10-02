@@ -24,7 +24,7 @@ vagrant up
 
 If you want to set up the system yourself:
 
-It is tested with docker 18.09 and 19.03 in swarm mode.
+It is tested with docker 18.09, 19.03 and 20.10 in swarm mode.
 
 To deploy services:
 
@@ -55,6 +55,7 @@ When running swarm on localhost, make sure to add DNS records e.g. to `/etc/host
 127.0.0.1 pulseweb.chaosdorf.space
 127.0.0.1 ympd.chaosdorf.space
 127.0.0.1 traefik.chaosdorf.space
+127.0.0.1 glitchtip.chaosdorf.space
 127.0.0.1 swarmpit
 127.0.0.1 portainer
 127.0.0.1 pizza
@@ -66,6 +67,7 @@ When running swarm on localhost, make sure to add DNS records e.g. to `/etc/host
 127.0.0.1 pulseweb
 127.0.0.1 ympd
 127.0.0.1 traefik
+127.0.0.1 glitchtip
 ```
 
 Portainer and swarmpit are fancy management web UIs and can be deployed tor testing.
