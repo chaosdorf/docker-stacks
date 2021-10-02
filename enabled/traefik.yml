@@ -53,6 +53,27 @@ services:
         - traefik.http.middlewares.traefik-error.errors.query=/{status}.html
         - traefik.http.middlewares.traefik-auth.digestauth.usersfile=/run/secrets/TRAEFIK_DIGEST_AUTH
         - traefik.http.middlewares.traefik-auth.digestauth.removeheader=true
+  error:
+    image: guillaumebriday/traefik-custom-error-pages:latest
+    networks:
+      - traefik
+    deploy:
+      mode: replicated
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+      resources:
+        limits:
+          cpus: '0.25'
+          memory: 100M
+        reservations:
+          cpus: '0.0625'
+          memory: 4M
+      labels:
+        - traefik.docker.network=traefik_net
+        - traefik.http.services.error.loadbalancer.server.port=80
+        - "traefik.http.routers.error.rule=HostRegexp(`{host:.+}`)"
+        - traefik.http.routers.error.priority=1 # low priority as fallback
 
 volumes:
   acme2:
