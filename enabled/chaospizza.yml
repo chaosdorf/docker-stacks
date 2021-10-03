@@ -2,14 +2,10 @@ version: '3.7'
 
 services:
   db:
-    image: tianon/postgres-upgrade:9.6-to-13
-    environment:
-      PGUSER: chaospizza
-      PGPASSWORD: chaospizza
-      POSTGRES_INITDB_ARGS: --username=chaospizza --pwfile=<(echo chaospizza)
+    image: busybox:1.34
+    command: ["sh", "-c", "echo 'host all all all md5' >> /database/pg_hba.conf"]
     volumes:
-      - database:/var/lib/postgresql/9.6/data
-      - database2:/var/lib/postgresql/13/data
+      - database2:/database
     deploy:
       mode: replicated
       replicas: 1
