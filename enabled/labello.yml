@@ -4,7 +4,7 @@ services:
   app:
     image: chaosdorf/labello:latest
     environment:
-      - PRINTER_HOST=10.1.255.228
+      - PRINTER_HOST=10.2.7.1
     secrets:
       - source: LABELLO_SENTRY_DSN
         target: SENTRY_DSN
