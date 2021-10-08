@@ -41,13 +41,13 @@ services:
         - traefik.http.middlewares.chaospizza-error.errors.status=401,403,404,429,500,503
         - traefik.http.middlewares.chaospizza-error.errors.query=/{status}.html
   db:
-    image: postgres:9.6
+    image: postgres:13-alpine
     environment:
       POSTGRES_USER: chaospizza
       POSTGRES_PASSWORD: chaospizza
       POSTGRES_DB: chaospizza
     volumes:
-      - database:/var/lib/postgresql/data
+      - database2:/var/lib/postgresql/data
     networks:
       - internal
     deploy:
@@ -80,7 +80,7 @@ services:
         max_attempts: 5
 
 volumes:
-  database:
+  database2:
   backup:
 
 networks:
