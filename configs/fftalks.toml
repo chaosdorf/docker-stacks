@@ -1,0 +1,9 @@
+[INFO-BEAMER]
+pi-id = 21405
+background-setup-id = 9428
+background-setup-name = "31c3"
+talks-setup-id = 10146
+talks-setup-name = "Freitagsfoo"
+
+[REDIS]
+URL = "redis://redis:6379/0"
