@@ -2,64 +2,26 @@ version: '3.7'
 
 services:
   app:
-    image: chaosdorf/mete:latest
-    environment:
-      - RAILS_ENV=production
-      - SECRET_KEY_BASE=yoloyolo123
-    secrets:
-      - source: METE_SENTRY_DSN
-        target: SENTRY_DSN
-    volumes:
-      - system:/app/public/system
-    networks:
-      - internal
-      - traefik
+    image: hello-world
     deploy:
       mode: replicated
       replicas: 1
       restart_policy:
-        delay: 60s
-        max_attempts: 5
-      labels:
-        - traefik.docker.network=traefik_net
-        - traefik.http.services.mete.loadbalancer.server.port=80
-        - "traefik.http.routers.mete-http.rule=Host(`mete.chaosdorf.space`) || Host(`mete`)"
-        - traefik.http.routers.mete-http.middlewares=global-headers@file
-        - traefik.http.routers.mete-http.service=mete@docker
-        - "traefik.http.routers.mete-https.rule=Host(`mete.chaosdorf.space`) || Host(`mete`)"
-        - traefik.http.routers.mete-https.middlewares=global-headers@file
-        - traefik.http.routers.mete-https.service=mete@docker
-        - traefik.http.routers.mete-https.tls=true
-        - traefik.http.routers.mete-https.tls.certresolver=default
-        - traefik.http.routers.mete-https.tls.domains[0].main=*.chaosdorf.space
+        condition: none
   db:
-    image: postgres:10-alpine
-    environment:
-      POSTGRES_PASSWORD: mete
-    volumes:
-      - database:/var/lib/postgresql/data
-    networks:
-      - internal
+    image: hello-world
     deploy:
       mode: replicated
       replicas: 1
       restart_policy:
-        delay: 60s
-        max_attempts: 5
+        condition: none
   db-backup:
-    image: nomaster/postgres-backup
-    environment:
-      PGPASSWORD: mete
-    volumes:
-      - backup:/backup
-    networks:
-      - internal
+    image: hello-world
     deploy:
       mode: replicated
       replicas: 1
       restart_policy:
-        delay: 60s
-        max_attempts: 5
+        condition: none
 
 volumes:
   system:
