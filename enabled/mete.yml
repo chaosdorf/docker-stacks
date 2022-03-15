@@ -9,7 +9,13 @@ services:
       restart_policy:
         condition: none
   db:
-    image: hello-world
+    image: tianon/postgres-upgrade:10-to-14
+    environment:
+      PGPASSWORD: mete
+      POSTGRES_INITDB_ARGS: --pwfile=<(echo mete)
+    volumes:
+      - database:/var/lib/postgresql/10/data
+      - database2:/var/lib/postgresql/14/data
     deploy:
       mode: replicated
       replicas: 1
@@ -26,6 +32,7 @@ services:
 volumes:
   system:
   database:
+  database2:
   backup:
 
 networks:
