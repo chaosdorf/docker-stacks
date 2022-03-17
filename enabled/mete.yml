@@ -33,11 +33,11 @@ services:
         - traefik.http.routers.mete-https.tls.certresolver=default
         - traefik.http.routers.mete-https.tls.domains[0].main=*.chaosdorf.space
   db:
-    image: postgres:10-alpine
+    image: postgres:14-alpine
     environment:
       POSTGRES_PASSWORD: mete
     volumes:
-      - database:/var/lib/postgresql/data
+      - database2:/var/lib/postgresql/data
     networks:
       - internal
     deploy:
@@ -63,7 +63,7 @@ services:
 
 volumes:
   system:
-  database:
+  database2:
   backup:
 
 networks:
