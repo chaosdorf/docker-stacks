@@ -24,6 +24,12 @@ services:
       - 9116
     networks:
       - internal
+    deploy:
+      mode: replicated
+      replicas: 1
+      restart_policy:
+        delay: 60s
+        max_attempts: 5
   prometheus:
     image: prom/prometheus
     configs:
@@ -36,3 +42,9 @@ services:
       - dashpi_internal
     ports:
       - 9090
+    deploy:
+      mode: replicated
+      replicas: 1
+      restart_policy:
+        delay: 60s
+        max_attempts: 5
