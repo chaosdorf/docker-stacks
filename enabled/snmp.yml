@@ -5,6 +5,8 @@ volumes:
 
 networks:
   internal:
+  dashpi_internal:
+    external: true
 
 services:
   snmp:
