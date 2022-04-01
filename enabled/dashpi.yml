@@ -17,6 +17,7 @@ services:
         target: SENTRY_DSN
     networks:
       - traefik
+      - internal
     deploy:
       mode: replicated
       replicas: 1
@@ -40,6 +41,7 @@ networks:
     driver: overlay
     external: true
     name: traefik_net
+  internal:
 
 secrets:
   DASHING_AUTH_TOKEN:

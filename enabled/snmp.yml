@@ -1,0 +1,27 @@
+version: "3.2"
+
+volumes:
+  prometheus:
+
+networks:
+  internal:
+
+services:
+  snmp:
+    image: prom/snmp-exporter
+    volumes:
+      - ../configs/snmp.yml:/etc/snmp_exporter/snmp.yml:ro
+      - ../configs/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+    ports:
+      - 9116
+    networks:
+      - internal
+  prometheus:
+    image: prom/prometheus
+    volumes:
+      - prometheus:/prometheus
+    networks:
+      - internal
+      - dashpi_internal
+    ports:
+      - 9090
