@@ -9,7 +9,7 @@ networks:
     external: true
 
 services:
-  snmp:
+  exporter:
     image: prom/snmp-exporter
     volumes:
       - ../configs/snmp.yml:/etc/snmp_exporter/snmp.yml:ro

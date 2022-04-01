@@ -12,4 +12,4 @@ scrape_configs:
       - source_labels: [__param_target]
         target_label: instance
       - target_label: __address__
-        replacement: snmp:9116
+        replacement: exporter:9116
