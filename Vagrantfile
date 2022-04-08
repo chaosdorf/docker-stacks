@@ -17,6 +17,9 @@ Vagrant.configure("2") do |config|
     systemctl enable docker.service
     docker swarm init
     docker network create --driver overlay traefik_net
+    echo y | docker network rm ingress
+    sleep 10
+    docker network create --driver overlay --ingress --subnet=10.255.0.0/16 --gateway=10.255.0.1 ingress
     echo "foo" | docker secret create DASHING_AUTH_TOKEN -
     echo "foo" | docker secret create TWITTER_ACCESS_TOKEN -
     echo "foo" | docker secret create TWITTER_ACCESS_TOKEN_SECRET -
