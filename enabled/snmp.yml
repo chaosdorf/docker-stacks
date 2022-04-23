@@ -7,6 +7,10 @@ networks:
   internal:
   dashpi_internal:
     external: true
+  traefik:
+    driver: overlay
+    external: true
+    name: traefik_net
 
 configs:
   snmp:
@@ -24,12 +28,25 @@ services:
       - 9116
     networks:
       - internal
+      - traefik
     deploy:
       mode: replicated
       replicas: 1
       restart_policy:
         delay: 60s
         max_attempts: 5
+      labels:
+        - traefik.docker.network=traefik_net
+        - traefik.http.services.snmp.loadbalancer.server.port=9116
+        - "traefik.http.routers.snmp-http.rule=Host(`snmp.chaosdorf.space`) || Host(`snmp`)"
+        - traefik.http.routers.snmp-http.middlewares=global-headers@file
+        - traefik.http.routers.snmp-http.service=snmp@docker
+        - "traefik.http.routers.snmp-https.rule=Host(`snmp.chaosdorf.space`) || Host(`snmp`)"
+        - traefik.http.routers.snmp-https.middlewares=global-headers@file
+        - traefik.http.routers.snmp-https.service=snmp@docker
+        - traefik.http.routers.snmp-https.tls=true
+        - traefik.http.routers.snmp-https.tls.certresolver=default
+        - traefik.http.routers.snmp-https.tls.domains[0].main=*.chaosdorf.space
   prometheus:
     image: prom/prometheus
     configs:

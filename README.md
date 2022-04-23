@@ -56,6 +56,7 @@ When running swarm on localhost, make sure to add DNS records e.g. to `/etc/host
 127.0.0.1 ympd.chaosdorf.space
 127.0.0.1 traefik.chaosdorf.space
 127.0.0.1 glitchtip.chaosdorf.space
+127.0.0.1 snmp.chaosdorf.space
 127.0.0.1 swarmpit
 127.0.0.1 portainer
 127.0.0.1 pizza
@@ -68,6 +69,7 @@ When running swarm on localhost, make sure to add DNS records e.g. to `/etc/host
 127.0.0.1 ympd
 127.0.0.1 traefik
 127.0.0.1 glitchtip
+127.0.0.1 snmp
 ```
 
 Portainer and swarmpit are fancy management web UIs and can be deployed tor testing.
