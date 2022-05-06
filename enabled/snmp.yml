@@ -24,8 +24,6 @@ services:
     configs:
       - source: snmp
         target: /etc/snmp_exporter/snmp.yml
-    ports:
-      - 9116
     networks:
       - internal
       - traefik
@@ -57,8 +55,6 @@ services:
     networks:
       - internal
       - dashpi_internal
-    ports:
-      - 9090
     deploy:
       mode: replicated
       replicas: 1
