@@ -64,7 +64,7 @@ services:
           cpus: '0.125'
           memory: 16M
   db-backup:
-    image: nomaster/postgres-backup
+    image: quay.io/chaosdorf/postgres-backup:latest
     volumes:
       - backup:/backup
     networks:
