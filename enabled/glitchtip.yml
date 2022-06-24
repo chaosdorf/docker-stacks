@@ -36,7 +36,7 @@ services:
       - internal
     deploy: *default-deploy
   postgres-backup:
-    image: nomaster/postgres-backup
+    image: quay.io/chaosdorf/postgres-backup:latest
     volumes:
       - backup:/backup
     networks:
