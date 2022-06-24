@@ -47,7 +47,7 @@ services:
         delay: 60s
         max_attempts: 5
   db-backup:
-    image: nomaster/postgres-backup
+    image: quay.io/chaosdorf/postgres-backup:latest
     environment:
       PGPASSWORD: mete
     volumes:
