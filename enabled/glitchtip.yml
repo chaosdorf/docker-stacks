@@ -7,6 +7,8 @@ x-environment: &default-environment
   DEFAULT_FROM_EMAIL: raumrelay@chaosdorf.de
   EMAIL_URL: smtps://raumrelay:nope@intern.chaosdorf.de:587
   SENTRY_DSN: nope
+  CELERY_WORKER_CONCURRENCY: 1  # defaults to num cores
+  UWSGI_WORKERS: 2
   # TODO: file a PR with GlitchTip for https://django-environ.readthedocs.io/en/latest/tips.html#docker-style-file-based-variables
 x-depends_on: &default-depends_on
   - postgres
