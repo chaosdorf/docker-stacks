@@ -37,24 +37,6 @@ services:
     networks:
       - internal
     deploy: *default-deploy
-  postgres-backup:
-    image: quay.io/chaosdorf/postgres-backup:latest
-    volumes:
-      - backup:/backup
-    networks:
-      - internal
-    environment:
-      PGHOST: postgres
-      PGUSER: postgres
-      PGPASSWORD: postgres
-    deploy:
-      mode: replicated
-      replicas: 1
-      restart_policy:
-        delay: 60s
-        max_attempts: 5
-    depends_on:
-      - postgres
   redis:
     image: redis:6-alpine
     networks:
@@ -121,7 +103,6 @@ services:
 
 volumes:
   database:
-  backup:
   redis:
 
 networks:
