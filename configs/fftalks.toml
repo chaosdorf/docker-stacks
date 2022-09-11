@@ -4,7 +4,7 @@ background-setup-id = 9428
 background-setup-name = "31c3"
 talks-setup-id = 10146
 talks-setup-name = "Freitagsfoo"
-extron-port = 5
+extron-port = 6
 
 [REDIS]
 URL = "redis://redis:6379/0"
