@@ -1,0 +1,11 @@
+version: '3.7'
+
+services:
+  app:
+    image: thetorproject/snowflake-proxy:latest
+    deploy:
+      mode: replicated
+      replicas: 1
+      restart_policy:
+        delay: 60s
+        max_attempts: 5
