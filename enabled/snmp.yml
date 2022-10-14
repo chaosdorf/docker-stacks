@@ -13,7 +13,7 @@ networks:
     name: traefik_net
 
 configs:
-  snmp:
+  snmp2:
     file: ../configs/snmp.yml
   prometheus:
     file: ../configs/prometheus.yml
@@ -22,7 +22,7 @@ services:
   exporter:
     image: prom/snmp-exporter
     configs:
-      - source: snmp
+      - source: snmp2
         target: /etc/snmp_exporter/snmp.yml
     networks:
       - internal
