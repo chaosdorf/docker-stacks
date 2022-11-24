@@ -4,7 +4,7 @@ services:
   app:
     image: chaosdorf/siamqtt:latest
     configs:
-      - source: config
+      - source: config2
         target: /etc/siamqtt.toml
     secrets:
       - SIAMQTT_SENTRY_DSN
@@ -18,7 +18,7 @@ services:
         max_attempts: 5
 
 configs:
-  config:
+  config2:
     file: ../configs/siamqtt.toml
 
 secrets:

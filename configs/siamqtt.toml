@@ -5,3 +5,27 @@ accounts = ["12345678"]
 
 [mqtt]
 server = "mqttserver.chaosdorf.space"
+
+[mqtt.homeassistant.device.1]
+name = "brand"
+
+[mqtt.homeassistant.device.2]
+name = "einbruch"
+
+[mqtt.homeassistant.device.3]
+name = "bewegungsmelder"
+
+[mqtt.homeassistant.device.4]
+name = "fenster"
+
+[mqtt.homeassistant.device.5]
+name = "stoerung"
+
+[mqtt.homeassistant.device.6]
+name = "bedrohung"
+
+[mqtt.homeassistant.device.7]
+name = "klingel"
+
+[mqtt.homeassistant.device.8]
+name = "kontakt"
