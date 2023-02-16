@@ -24,14 +24,15 @@ vagrant up
 
 If you want to set up the system yourself:
 
-It is tested with docker 18.09, 19.03 and 20.10 in swarm mode.
+It is tested with docker 20.10 and 23.0 in swarm mode.
 
 To deploy services:
 
 ```bash
-$ docker stack deploy -c enabled/traefik.yml traefik
-$ docker stack deploy -c enabled/chaospizza.yml chaospizza
-$ docker stack deploy -c enabled/mete.yml mete
+$ ./deploy-stacks.sh traefik
+$ ./deploy-stacks.sh chaospizza
+...
+$ ./deploy-stacks.sh # deploys everything
 ```
 
 Traefik publishes port 80 for application access and 443 for HTTPS.
