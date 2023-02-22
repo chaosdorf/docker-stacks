@@ -9,7 +9,9 @@ services:
     secrets:
       - SIAMQTT_SENTRY_DSN
     ports:
-      - 1001:1001
+      - published: 1001
+        target: 1001
+        mode: host
     deploy:
       mode: replicated
       replicas: 1
