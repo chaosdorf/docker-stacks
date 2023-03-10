@@ -40,6 +40,8 @@ The Vagrantfile remaps this to 8080 and 4443.
 
 ## Notes
 
+### DNS
+
 Traefik does not manage DNS records yet.
 
 When running swarm on localhost, make sure to add DNS records e.g. to `/etc/hosts`:
@@ -73,4 +75,18 @@ When running swarm on localhost, make sure to add DNS records e.g. to `/etc/host
 127.0.0.1 snmp
 ```
 
+### Disabled containers
+
 Portainer and swarmpit are fancy management web UIs and can be deployed tor testing.
+
+### IPv6
+
+Docker has [experimental `ip6tables` support](https://github.com/moby/moby/pull/41622).
+When enabling it (and
+[reconfiguring `docker_gwbridge`](https://github.com/robbertkl/docker-ipv6nat/blob/master/README.md#swarm-mode-support)
+), containers get internal IPv6 addresses and might be able to reach external
+hosts via IPv6. This does not seem to work for the ingress network, though.
+
+That's why forwarded ports are marked with `mode: host` which bypasses Swarm's
+load balancing.
+

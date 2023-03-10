@@ -7,7 +7,7 @@ services:
       CF_API_EMAIL: account+cloudflare@chaosdorf.de
       CF_API_KEY_FILE: /run/secrets/CF_API_KEY
     configs:
-      - source: static
+      - source: static2
         target: /etc/traefik/traefik.toml
       - source: dynamic
         target: /etc/traefik/dynamic.toml
@@ -21,8 +21,12 @@ services:
     networks:
       - traefik
     ports:
-      - 80:80
-      - 443:80
+      - published: 80
+        target: 80
+        mode: host
+      - published: 443
+        target: 443
+        mode: host
     deploy:
       mode: global
       placement:
@@ -87,7 +91,7 @@ networks:
     name: traefik_net
 
 configs:
-  static:
+  static2:
     file: ../configs/traefik-static.toml
   dynamic:
     file: ../configs/traefik-dynamic.toml
