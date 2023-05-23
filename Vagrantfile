@@ -1,7 +1,7 @@
 Vagrant.configure("2") do |config|
   config.vm.box = "debian/bullseye64"
   config.vm.provider :virtualbox do |v|
-    v.memory = 1500
+    v.memory = 3 * 1024
   end
 
   config.vm.network :forwarded_port, host: 8080, guest: 80
