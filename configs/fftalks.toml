@@ -10,5 +10,5 @@ extron-port = 6
 URL = "redis://redis:6379/0"
 
 [EXTRON]
-url = "http://videomix/"
+url = "http://videomix.chaosdorf.space/"
 num-inputs = 6

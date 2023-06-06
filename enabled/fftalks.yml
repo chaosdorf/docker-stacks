@@ -7,7 +7,7 @@ services:
       - INFO_BEAMER_API_KEY
       - FFTALKS_SENTRY_DSN
     configs:
-      - source: toml3
+      - source: toml4
         target: /etc/freitagsfoo-web.toml
     networks:
       - traefik
@@ -59,5 +59,5 @@ secrets:
     external: true
 
 configs:
-  toml3:
+  toml4:
     file: ../configs/fftalks.toml
