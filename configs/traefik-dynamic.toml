@@ -1,4 +1,4 @@
 [http.middlewares]
   [http.middlewares.global-headers.headers]
      STSSeconds=2592000
-     PermissionsPolicy="interest-cohort=()"
+     PermissionsPolicy="browsing-topics=(), join-ad-interest-group=(), run-ad-auction=()"

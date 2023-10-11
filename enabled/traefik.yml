@@ -9,7 +9,7 @@ services:
     configs:
       - source: static2
         target: /etc/traefik/traefik.toml
-      - source: dynamic
+      - source: dynamic2
         target: /etc/traefik/dynamic.toml
     secrets:
       - CF_API_KEY
@@ -93,7 +93,7 @@ networks:
 configs:
   static2:
     file: ../configs/traefik-static.toml
-  dynamic:
+  dynamic2:
     file: ../configs/traefik-dynamic.toml
 
 secrets:
