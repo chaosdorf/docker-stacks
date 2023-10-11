@@ -2,7 +2,7 @@ version: '3.7'
 
 services:
   proxy:
-    image: traefik:v2.8
+    image: traefik:v2.9
     environment:
       CF_API_EMAIL: account+cloudflare@chaosdorf.de
       CF_API_KEY_FILE: /run/secrets/CF_API_KEY
