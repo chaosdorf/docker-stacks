@@ -22,7 +22,7 @@ x-deploy: &default-deploy
   resources:
     limits:
       cpus: '0.50'
-      memory: 256M
+      memory: 512M
     reservations:
       cpus: '0.125'
       memory: 16M
