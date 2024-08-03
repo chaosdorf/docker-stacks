@@ -2,7 +2,7 @@
 deploy() {
     name=$(echo "$1" | cut -f 2 -d '/' | cut -f 1 -d '.')
     stackfile=$name.yml
-    docker stack deploy -c "./enabled/${stackfile}" "${name}"
+    docker stack deploy --compose-file "./enabled/${stackfile}" --prune --resolve-image always "${name}"
 }
 
 if [ -n "$1" ]
