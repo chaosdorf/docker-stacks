@@ -12,6 +12,8 @@ services:
       restart_policy:
         delay: 60s
         max_attempts: 5
+      update_config:
+        order: start-first
 
 secrets:
   MPD2MQTT_SENTRY_DSN:
