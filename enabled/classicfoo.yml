@@ -1,0 +1,23 @@
+version: '3.7'
+
+services:
+  proxy:
+    image: chaosdorf/classicfoo-demystyfy:main
+    ports:
+      - published: 8080
+        target: 8080
+    deploy:
+      mode: global
+      placement:
+        constraints:
+          - node.role == manager
+      restart_policy:
+        delay: 60s
+        max_attempts: 5
+      resources:
+        limits:
+          cpus: '0.50'
+          memory: 128M
+        reservations:
+          cpus: '0.125'
+          memory: 16M
