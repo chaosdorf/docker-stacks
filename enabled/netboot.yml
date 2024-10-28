@@ -1,0 +1,38 @@
+version: '3.7'
+
+# This currently just serves as a jump from DHCP BOOTP offer to netboot.xyz by
+# serving iPXE via TFTP. This could also cache and serve the actual menus and
+# images locally, but that would require HTTP.
+# TODO: figure out how to do this (does this go through Traefik?)
+
+services:
+  netbootxyz:
+    image: ghcr.io/netbootxyz/netbootxyz
+    deploy:
+      mode: global
+      placement:
+        constraints:
+          - node.role == manager
+      restart_policy:
+        delay: 60s
+        max_attempts: 5
+      resources:
+        limits:
+          cpus: '0.75'
+          memory: 512M
+        reservations:
+          cpus: '0.125'
+          memory: 16M
+    environment:
+      # TODO: set NGINX_PORT and WEB_APP_PORT for local files
+      - TFTPD_OPTS='--tftp-single-port'
+    volumes:
+      - config:/config
+      - assets:/assets
+    ports:
+      # TODO: 3000:WEB_APP_PORT and 8080:NGINX_PORT
+      - 69:69/udp
+    restart: unless-stopped
+volumes:
+  config:
+  assets:
