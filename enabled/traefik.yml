@@ -4,15 +4,14 @@ services:
   proxy:
     image: traefik:v2.11
     environment:
-      CF_API_EMAIL: account+cloudflare@chaosdorf.de
-      CF_API_KEY_FILE: /run/secrets/CF_API_KEY
+      CF_DNS_API_TOKEN_FILE: /run/secrets/CF_DNS_API_TOKEN
     configs:
       - source: static2
         target: /etc/traefik/traefik.toml
       - source: dynamic2
         target: /etc/traefik/dynamic.toml
     secrets:
-      - CF_API_KEY
+      - CF_DNS_API_TOKEN
       - TRAEFIK_DIGEST_AUTH
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
@@ -97,7 +96,7 @@ configs:
     file: ../configs/traefik-dynamic.toml
 
 secrets:
-  CF_API_KEY:
+  CF_DNS_API_TOKEN:
     external: true
   TRAEFIK_DIGEST_AUTH:
     external: true
