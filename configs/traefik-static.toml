@@ -8,9 +8,8 @@
 [providers]
   [providers.file]
     filename = "/etc/traefik/dynamic.toml"
-  [providers.docker]
+  [providers.swarm]
     watch = true
-    swarmMode = true
     # only detect services that have something configured
     constraints = "Label(`traefik.docker.network`, `traefik_net`)"
 

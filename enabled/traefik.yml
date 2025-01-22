@@ -2,11 +2,11 @@ version: '3.7'
 
 services:
   proxy:
-    image: traefik:v2.11
+    image: traefik:v3
     environment:
       CF_DNS_API_TOKEN_FILE: /run/secrets/CF_DNS_API_TOKEN
     configs:
-      - source: static2
+      - source: static3
         target: /etc/traefik/traefik.toml
       - source: dynamic2
         target: /etc/traefik/dynamic.toml
@@ -90,7 +90,7 @@ networks:
     name: traefik_net
 
 configs:
-  static2:
+  static3:
     file: ../configs/traefik-static.toml
   dynamic2:
     file: ../configs/traefik-dynamic.toml
