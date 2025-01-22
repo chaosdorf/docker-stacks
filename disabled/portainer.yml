@@ -26,18 +26,18 @@ services:
           cpus: '0.25'
           memory: 32M
       labels:
-        - traefik.docker.network=traefik_net
+        - traefik.swarm.network=traefik_net
         - traefik.http.services.portainer.loadbalancer.server.port=9000
         - "traefik.http.routers.portainer-http.rule=Host(`portainer.chaosdorf.space`) || Host(`portainer`)"
-        - traefik.http.routers.portainer-http.middlewares=global-headers@file,portainer-error@docker
-        - traefik.http.routers.portainer-http.service=portainer@docker
+        - traefik.http.routers.portainer-http.middlewares=global-headers@file,portainer-error@swarm
+        - traefik.http.routers.portainer-http.service=portainer@swarm
         - "traefik.http.routers.portainer-https.rule=Host(`portainer.chaosdorf.space`) || Host(`portainer`)"
-        - traefik.http.routers.portainer-https.middlewares=global-headers@file,portainer-error@docker
-        - traefik.http.routers.portainer-https.service=portainer@docker
+        - traefik.http.routers.portainer-https.middlewares=global-headers@file,portainer-error@swarm
+        - traefik.http.routers.portainer-https.service=portainer@swarm
         - traefik.http.routers.portainer-https.tls=true
         - traefik.http.routers.portainer-https.tls.certresolver=default
         - traefik.http.routers.portainer-https.tls.domains[0].main=*.chaosdorf.space
-        - traefik.http.middlewares.portainer-error.errors.service=error@docker
+        - traefik.http.middlewares.portainer-error.errors.service=error@swarm
         - traefik.http.middlewares.portainer-error.errors.status=401,403,404,429,500,503
         - traefik.http.middlewares.portainer-error.errors.query=/{status}.html
   agent:

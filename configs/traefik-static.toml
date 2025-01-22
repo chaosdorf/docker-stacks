@@ -11,7 +11,7 @@
   [providers.swarm]
     watch = true
     # only detect services that have something configured
-    constraints = "Label(`traefik.docker.network`, `traefik_net`)"
+    constraints = "Label(`traefik.swarm.network`, `traefik_net`)"
 
 [api]
 

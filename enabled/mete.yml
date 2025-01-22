@@ -21,14 +21,14 @@ services:
         delay: 60s
         max_attempts: 5
       labels:
-        - traefik.docker.network=traefik_net
+        - traefik.swarm.network=traefik_net
         - traefik.http.services.mete.loadbalancer.server.port=80
         - "traefik.http.routers.mete-http.rule=Host(`mete.chaosdorf.space`) || Host(`mete`)"
         - traefik.http.routers.mete-http.middlewares=global-headers@file
-        - traefik.http.routers.mete-http.service=mete@docker
+        - traefik.http.routers.mete-http.service=mete@swarm
         - "traefik.http.routers.mete-https.rule=Host(`mete.chaosdorf.space`) || Host(`mete`)"
         - traefik.http.routers.mete-https.middlewares=global-headers@file
-        - traefik.http.routers.mete-https.service=mete@docker
+        - traefik.http.routers.mete-https.service=mete@swarm
         - traefik.http.routers.mete-https.tls=true
         - traefik.http.routers.mete-https.tls.certresolver=default
         - traefik.http.routers.mete-https.tls.domains[0].main=*.chaosdorf.space

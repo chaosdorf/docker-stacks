@@ -6,7 +6,7 @@ services:
     environment:
       CF_DNS_API_TOKEN_FILE: /run/secrets/CF_DNS_API_TOKEN
     configs:
-      - source: static3
+      - source: static4
         target: /etc/traefik/traefik.toml
       - source: dynamic2
         target: /etc/traefik/dynamic.toml
@@ -42,17 +42,17 @@ services:
           cpus: '0.125'
           memory: 16M
       labels:
-        - traefik.docker.network=traefik_net
+        - traefik.swarm.network=traefik_net
         - "traefik.http.routers.traefik-https.rule=Host(`traefik.chaosdorf.space`) || Host(`traefik`)"
         - traefik.http.routers.traefik-https.tls=true
         - traefik.http.routers.traefik-https.tls.certresolver=default
         - traefik.http.routers.traefik-https.tls.domains[0].main=*.chaosdorf.space
-        - traefik.http.routers.traefik-https.middlewares=global-headers@file,traefik-error@docker,traefik-auth@docker
+        - traefik.http.routers.traefik-https.middlewares=global-headers@file,traefik-error@swarm,traefik-auth@swarm
         - traefik.http.routers.traefik-https.service=api@internal
         # https://github.com/containous/traefik/issues/5732
         - traefik.http.services.traefik.loadbalancer.server.port=1234
         - traefik.http.middlewares.traefik-error.errors.status=403,404,429,500,503
-        - traefik.http.middlewares.traefik-error.errors.service=error@docker
+        - traefik.http.middlewares.traefik-error.errors.service=error@swarm
         - traefik.http.middlewares.traefik-error.errors.query=/{status}.html
         - traefik.http.middlewares.traefik-auth.digestauth.usersfile=/run/secrets/TRAEFIK_DIGEST_AUTH
         - traefik.http.middlewares.traefik-auth.digestauth.removeheader=true
@@ -74,7 +74,7 @@ services:
           cpus: '0.0625'
           memory: 4M
       labels:
-        - traefik.docker.network=traefik_net
+        - traefik.swarm.network=traefik_net
         - traefik.http.services.error.loadbalancer.server.port=80
         - "traefik.http.routers.error.rule=HostRegexp(`{host:.+}`)"
         - traefik.http.routers.error.priority=1 # low priority as fallback
@@ -90,7 +90,7 @@ networks:
     name: traefik_net
 
 configs:
-  static3:
+  static4:
     file: ../configs/traefik-static.toml
   dynamic2:
     file: ../configs/traefik-dynamic.toml

@@ -65,11 +65,11 @@ services:
           cpus: '0.125'
           memory: 64M
       labels:
-        - traefik.docker.network=traefik_net
+        - traefik.swarm.network=traefik_net
         - traefik.http.services.glitchtip.loadbalancer.server.port=8000
         - "traefik.http.routers.glitchtip.rule=Host(`glitchtip.chaosdorf.space`)"
         - traefik.http.routers.glitchtip.middlewares=global-headers@file
-        - traefik.http.routers.glitchtip.service=glitchtip@docker
+        - traefik.http.routers.glitchtip.service=glitchtip@swarm
         - traefik.http.routers.glitchtip.tls=true
         - traefik.http.routers.glitchtip.tls.certresolver=default
         - traefik.http.routers.glitchtip.tls.domains[0].main=*.chaosdorf.space

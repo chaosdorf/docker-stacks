@@ -18,14 +18,14 @@ services:
       # MINIO_SECRET_KEY: bar
     deploy:
       labels:
-        - traefik.docker.network=traefik_net
+        - traefik.swarm.network=traefik_net
         - traefik.http.services.minio.loadbalancer.server.port=9000
         - "traefik.http.routers.minio-http.rule=Host(`minio.chaosdorf.space`) || Host(`minio`)"
         - traefik.http.routers.minio-http.middlewares=global-headers@file
-        - traefik.http.routers.minio-http.service=minio@docker
+        - traefik.http.routers.minio-http.service=minio@swarm
         - "traefik.http.routers.minio-https.rule=Host(`minio.chaosdorf.space`) || Host(`minio`)"
         - traefik.http.routers.minio-https.middlewares=global-headers@file
-        - traefik.http.routers.minio-https.service=minio@docker
+        - traefik.http.routers.minio-https.service=minio@swarm
         - traefik.http.routers.minio-https.tls=true
         - traefik.http.routers.minio-https.tls.certresolver=default
         - traefik.http.routers.minio-https.tls.domains[0].main=*.chaosdorf.space

@@ -29,15 +29,15 @@ services:
           cpus: '0.125'
           memory: 64M
       labels:
-        - traefik.docker.network=traefik_net
+        - traefik.swarm.network=traefik_net
         - traefik.http.services.chaospizza.loadbalancer.server.port=8000
         - "traefik.http.routers.chaospizza.rule=Host(`pizza.chaosdorf.space`)"
-        - traefik.http.routers.chaospizza.middlewares=global-headers@file,chaospizza-error@docker
-        - traefik.http.routers.chaospizza.service=chaospizza@docker
+        - traefik.http.routers.chaospizza.middlewares=global-headers@file,chaospizza-error@swarm
+        - traefik.http.routers.chaospizza.service=chaospizza@swarm
         - traefik.http.routers.chaospizza.tls=true
         - traefik.http.routers.chaospizza.tls.certresolver=default
         - traefik.http.routers.chaospizza.tls.domains[0].main=*.chaosdorf.space
-        - traefik.http.middlewares.chaospizza-error.errors.service=error@docker
+        - traefik.http.middlewares.chaospizza-error.errors.service=error@swarm
         - traefik.http.middlewares.chaospizza-error.errors.status=401,403,404,429,500,503
         - traefik.http.middlewares.chaospizza-error.errors.query=/{status}.html
   db:

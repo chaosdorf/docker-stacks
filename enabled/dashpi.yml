@@ -26,14 +26,14 @@ services:
       update_config:
         order: start-first
       labels:
-        - traefik.docker.network=traefik_net
+        - traefik.swarm.network=traefik_net
         - traefik.http.services.dashpi.loadbalancer.server.port=3030
         - "traefik.http.routers.dashpi-http.rule=Host(`dashboard.chaosdorf.space`) || Host(`dashboard`)"
         - traefik.http.routers.dashpi-http.middlewares=global-headers@file
-        - traefik.http.routers.dashpi-http.service=dashpi@docker
+        - traefik.http.routers.dashpi-http.service=dashpi@swarm
         - "traefik.http.routers.dashpi-https.rule=Host(`dashboard.chaosdorf.space`) || Host(`dashboard`)"
         - traefik.http.routers.dashpi-https.middlewares=global-headers@file
-        - traefik.http.routers.dashpi-https.service=dashpi@docker
+        - traefik.http.routers.dashpi-https.service=dashpi@swarm
         - traefik.http.routers.dashpi-https.tls=true
         - traefik.http.routers.dashpi-https.tls.certresolver=default
         - traefik.http.routers.dashpi-https.tls.domains[0].main=*.chaosdorf.space
