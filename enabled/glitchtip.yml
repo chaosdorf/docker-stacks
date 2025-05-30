@@ -29,11 +29,11 @@ x-deploy: &default-deploy
 
 services:
   postgres:
-    image: postgres:13-alpine
+    image: postgres:16-alpine
     environment:
       POSTGRES_HOST_AUTH_METHOD: "trust"
     volumes:
-      - database:/var/lib/postgresql/data
+      - database2:/var/lib/postgresql/data
     networks:
       - internal
     deploy: *default-deploy
@@ -104,7 +104,7 @@ services:
           memory: 16M
 
 volumes:
-  database:
+  database2:
   redis:
 
 networks:
