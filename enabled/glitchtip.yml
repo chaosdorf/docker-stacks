@@ -45,7 +45,7 @@ services:
       - redis:/data
     deploy: *default-deploy
   web:
-    image: glitchtip/glitchtip:v4.0.12
+    image: glitchtip/glitchtip:v4.1.5
     depends_on: *default-depends_on
     environment: *default-environment
     networks:
@@ -74,7 +74,7 @@ services:
         - traefik.http.routers.glitchtip.tls.certresolver=default
         - traefik.http.routers.glitchtip.tls.domains[0].main=*.chaosdorf.space
   worker:
-    image: glitchtip/glitchtip:v4.0.12
+    image: glitchtip/glitchtip:v4.1.5
     command: bin/run-celery-with-beat.sh
     depends_on: *default-depends_on
     environment: *default-environment
@@ -82,7 +82,7 @@ services:
       - internal
     deploy: *default-deploy
   migrate:
-    image: glitchtip/glitchtip:v4.0.12
+    image: glitchtip/glitchtip:v4.1.5
     depends_on: *default-depends_on
     command: "./manage.py migrate"
     networks:
