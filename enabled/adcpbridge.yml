@@ -1,0 +1,8 @@
+services:
+  adcpbridge:
+    image: k8r.eu/justjanne/adcp-client:latest
+    environment:
+      - POSTGRES_PASSWORD=postgres
+      - MQTT_HOST=mqtt.chaosdorf.space:1883
+      - ADCP_HOST=10.2.73.139:53595
+      - ADCP_PASS=Tom2fiWi
